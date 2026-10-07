@@ -2,8 +2,8 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  // TODO: set to the production domain before launch (used for canonical + OG URLs).
-  site: 'https://example.com',
+  // Used for canonical and og:url tags.
+  site: 'https://packsel.co',
   output: 'static',
   // ~8 KB of CSS total; inlining removes the only render-blocking request.
   build: { inlineStylesheets: 'always' },

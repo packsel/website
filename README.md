@@ -98,7 +98,6 @@ grep -rn "TODO" src
 
 ## Before launch
 
-- Set `site` in `astro.config.mjs` to the production domain. Canonical and `og:url` tags use it.
 - Add an `og:image` (1200×630) in `src/layouts/Base.astro`.
 - Replace every `TODO`.
 
