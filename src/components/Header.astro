@@ -1,0 +1,77 @@
+---
+import Brand from './Brand.astro';
+
+const nav = [
+  { href: '/how-it-works/', label: 'How it works' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="wordmark" href="/">
+      <Brand tm /><span class="visually-hidden"> home</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul role="list" class="nav-list">
+        {nav.map(({ href, label }) => (
+          <li>
+            <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: var(--border-width) solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-3);
+  }
+
+  .wordmark {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--color-ink);
+    text-decoration: none;
+    padding-block: var(--space-2);
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+  }
+
+  .nav-list a {
+    display: inline-block;
+    padding-block: var(--space-2);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .nav-list a:hover,
+  .nav-list a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+
+  .nav-list a[aria-current='page'] {
+    text-decoration-color: var(--color-accent);
+  }
+</style>

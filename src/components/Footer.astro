@@ -1,0 +1,38 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer surface-sunken">
+  <div class="container site-footer__inner">
+    <div class="stack stack-sm">
+      <h2 class="kicker">Contact</h2>
+      <p class="todo">TODO: sales email and phone number</p>
+    </div>
+    <div class="stack stack-sm">
+      <h2 class="kicker">Address</h2>
+      <address class="todo">TODO: registered business address</address>
+    </div>
+    <p class="mono site-footer__legal">© {year} packsel</p>
+    <p class="todo site-footer__legal">TODO: legal entity name and trademark line.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: var(--border-width) solid var(--color-border);
+    padding-block: var(--space-7);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  }
+
+  address { font-style: normal; }
+
+  .site-footer__legal {
+    grid-column: 1 / -1;
+    font-size: var(--text-xs);
+  }
+</style>

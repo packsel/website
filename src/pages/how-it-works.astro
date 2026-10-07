@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Brand from '../components/Brand.astro';
+
+// TODO: confirm step names and order with the ops team. These are placeholders.
+const steps = [
+  { title: 'Site assessment', body: 'TODO: what we look at on your floor and what you need to provide.' },
+  { title: 'Fleet sizing and lease terms', body: 'TODO: how fleet size and term length are agreed.' },
+  { title: 'Deployment', body: 'TODO: installation, mapping and integration with your systems.' },
+  { title: 'Operation and support', body: 'TODO: what support covers during the lease.' },
+];
+---
+
+<Base
+  title="How it works"
+  description="How leasing autonomous mobile robots from packsel works, from site assessment to ongoing support."
+>
+  <section class="section" aria-labelledby="page-title">
+    <div class="container stack stack-lg">
+      <div class="stack">
+        <p class="kicker">How it works</p>
+        <h1 id="page-title">From floor plan to fleet</h1>
+        <p class="lead">
+          How a lease with <Brand tm /> runs, step by step.
+        </p>
+      </div>
+
+      <ol role="list" class="steps stack stack-lg">
+        {steps.map((step, i) => (
+          <li class="step">
+            <p class="mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+            <div class="stack stack-sm">
+              <h2 class="step__title">{step.title}</h2>
+              <p class="todo">{step.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .step {
+    display: grid;
+    grid-template-columns: 3ch 1fr;
+    gap: var(--space-4);
+    padding-block-start: var(--space-5);
+    border-top: var(--border-width) solid var(--color-border);
+  }
+
+  .step__title { font-size: var(--text-lg); }
+</style>
