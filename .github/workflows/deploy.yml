@@ -1,0 +1,54 @@
+# Builds the site and commits the contents of dist/ to the `deploy` branch.
+# Porkbun Static Hosting's GitHub Connect serves that branch as-is (it has no build step).
+name: Build and publish to deploy branch
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Commit dist/ to the deploy branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin deploy >/dev/null; then
+            git fetch --depth=1 origin deploy
+            git worktree add --detach out FETCH_HEAD
+          else
+            git worktree add --detach out
+            git -C out checkout --orphan deploy-init
+          fi
+
+          find out -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R dist/. out/
+
+          cd out
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Build output unchanged; nothing to publish."
+            exit 0
+          fi
+          git commit -m "Deploy ${GITHUB_SHA}"
+          git push origin HEAD:refs/heads/deploy

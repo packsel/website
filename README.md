@@ -105,6 +105,18 @@ grep -rn "TODO" src
 
 The build output is static files in `dist/`. Any static host works.
 
+### Porkbun Static Hosting (production, packsel.co)
+
+Porkbun's GitHub Connect serves a branch exactly as it is in the repo. It doesn't run a build. The workflow in `.github/workflows/deploy.yml` handles the build: each push to `main` runs `npm ci && npm run build` and commits the contents of `dist/` to the `deploy` branch. That branch contains only the built site, at its root, and keeps one commit per deploy. If a build doesn't change the output, nothing is committed.
+
+One-time setup:
+
+1. Merge to `main` (or run the workflow by hand from the Actions tab). This creates the `deploy` branch.
+2. In Porkbun, go to Domain Management → packsel.co → Static Hosting → GitHub Connect. Authorize the Porkbun app for this repository, then choose the **`deploy`** branch, not `main`.
+3. Check that `https://packsel.co/how-it-works/` loads. The site uses directory-style URLs (`how-it-works/index.html`), so the host has to serve `index.html` for a folder path.
+
+Don't edit the `deploy` branch by hand. Every deploy overwrites it.
+
 ### Netlify
 
 New site from Git, then:
