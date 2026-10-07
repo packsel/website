@@ -2,6 +2,19 @@
 
 Static marketing site built with [Astro](https://astro.build). It outputs plain HTML and inlined CSS. No client-side framework, no CMS, and no JavaScript is shipped.
 
+Live at **https://packsel.co**, hosted on Porkbun Static Hosting.
+
+## Read this before changing anything
+
+**`main` is live.** Anything merged into `main` is built and published to packsel.co within about a minute, with no review step in between. See [How publishing works](#how-publishing-works).
+
+1. **Never push directly to `main`.** Work on a branch, run `npm run build` locally, and open a pull request.
+2. **Never edit, merge or open a pull request from the `deploy` branch.** It holds generated output and is overwritten on every deploy. GitHub will sometimes show a "deploy had recent pushes" banner offering a pull request. Ignore it.
+3. **Every value comes from `src/styles/tokens.css`.** No new colours, no gradients, no shadows. See [Design tokens](#design-tokens).
+4. **Don't make up facts.** No invented metrics, customer names, logos, testimonials or case studies. Where real copy is missing, use a visible `<p class="todo">TODO: …</p>`.
+5. **The site ships no JavaScript and depends only on Astro.** Ask the site owner before adding either.
+6. **™ on the first mention per page only.** Use `<Brand tm />` there and `<Brand />` everywhere after. See [The ™](#the-).
+
 ## Run it
 
 Requires Node 22.12 or newer.
@@ -96,39 +109,30 @@ The site self-hosts Latin-1 subsets of IBM Plex Sans (400, 600), Plex Sans Conde
 grep -rn "TODO" src
 ```
 
-## Before launch
+## Still to do
 
-- Add an `og:image` (1200×630) in `src/layouts/Base.astro`.
-- Replace every `TODO`.
+- Replace every `TODO` (see above).
+- Add an `og:image` (1200×630) in `src/layouts/Base.astro` so shared links show a preview image.
 
-## Deploy
+## How publishing works
 
-The build output is static files in `dist/`. Any static host works.
+```
+your branch ──PR──▶ main ──GitHub Action──▶ deploy ──Porkbun──▶ packsel.co
+```
 
-### Porkbun Static Hosting (production, packsel.co)
+- Porkbun's GitHub Connect publishes the **`deploy`** branch exactly as it is. It doesn't run a build.
+- `.github/workflows/deploy.yml` runs on every push to `main`. It runs `npm ci && npm run build`, then commits the contents of `dist/` to `deploy`, one commit per deploy. If the output hasn't changed, it commits nothing.
+- If the build fails, nothing is published and the live site stays as it was. Check the **Actions** tab on GitHub for the error.
+- To redeploy without a code change, go to **Actions → Build and publish to deploy branch → Run workflow**.
+- To roll back, revert the bad commit on `main` with a pull request. The workflow then publishes the earlier version.
 
-Porkbun's GitHub Connect serves a branch exactly as it is in the repo. It doesn't run a build. The workflow in `.github/workflows/deploy.yml` handles the build: each push to `main` runs `npm ci && npm run build` and commits the contents of `dist/` to the `deploy` branch. That branch contains only the built site, at its root, and keeps one commit per deploy. If a build doesn't change the output, nothing is committed.
+The Porkbun setting is in Domain Management → packsel.co → Static Hosting → GitHub Connect: repository `packselco/upgraded-train`, branch **`deploy`**. If it's ever switched back to `main`, the site will serve source files instead of the built pages.
 
-One-time setup:
+The site uses folder-style URLs (`/how-it-works/` is served from `how-it-works/index.html`).
 
-1. Merge to `main` (or run the workflow by hand from the Actions tab). This creates the `deploy` branch.
-2. In Porkbun, go to Domain Management → packsel.co → Static Hosting → GitHub Connect. Authorize the Porkbun app for this repository, then choose the **`deploy`** branch, not `main`.
-3. Check that `https://packsel.co/how-it-works/` loads. The site uses directory-style URLs (`how-it-works/index.html`), so the host has to serve `index.html` for a folder path.
+### Moving to another host
 
-Don't edit the `deploy` branch by hand. Every deploy overwrites it.
+The build output in `dist/` is plain static files, so any static host works. Netlify and Vercel both build from the repository themselves, so `deploy.yml` and the `deploy` branch aren't needed with either.
 
-### Netlify
-
-New site from Git, then:
-
-- Build command: `npm run build`
-- Publish directory: `dist`
-- Node version: 22.12+ (set `NODE_VERSION=22` under Environment variables)
-
-Or from the CLI: `npx netlify-cli deploy --build --prod`.
-
-### Vercel
-
-Import the repository. Vercel detects Astro and fills in the settings (build `npm run build`, output `dist`). Set Node.js to 22.x under Project Settings → General. No adapter is needed for static output.
-
-Or from the CLI: `npx vercel --prod`.
+- **Netlify:** build command `npm run build`, publish directory `dist`, environment variable `NODE_VERSION=22`.
+- **Vercel:** import the repository. It detects Astro automatically. Set Node.js to 22.x under Project Settings → General.
