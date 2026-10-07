@@ -4,7 +4,7 @@ Static marketing site built with [Astro](https://astro.build). It outputs plain 
 
 ## Run it
 
-Requires Node 22 or newer.
+Requires Node 22.12 or newer.
 
 ```sh
 npm install
@@ -112,7 +112,7 @@ New site from Git, then:
 
 - Build command: `npm run build`
 - Publish directory: `dist`
-- Node version: 22 (set `NODE_VERSION=22` under Environment variables)
+- Node version: 22.12+ (set `NODE_VERSION=22` under Environment variables)
 
 Or from the CLI: `npx netlify-cli deploy --build --prod`.
 
