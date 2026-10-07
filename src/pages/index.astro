@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import Brand from '../components/Brand.astro';
+---
+
+<Base
+  title="packsel · Warehouse robots, leased"
+  description="packsel leases autonomous mobile robots (AMRs) to warehouses."
+>
+  <section class="section" aria-labelledby="hero-title">
+    <div class="container stack stack-lg">
+      <div class="stack">
+        <p class="kicker">Warehouse AMR leasing</p>
+        <h1 id="hero-title">Autonomous mobile robots for your warehouse, on a lease.</h1>
+        <p class="lead">
+          <Brand tm /> leases autonomous mobile robots (AMRs) to warehouse operators.
+        </p>
+        <p class="todo">TODO: one or two sentences on who this is for and what changes for them.</p>
+      </div>
+      <div class="cluster">
+        <a class="button button-primary" href="/contact/">Talk to us</a>
+        <a class="button" href="/how-it-works/">How it works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top" aria-labelledby="why-title">
+    <div class="container stack stack-lg">
+      <div class="stack">
+        <p class="kicker">Leasing</p>
+        <h2 id="why-title">Why lease instead of buy</h2>
+      </div>
+      <ul role="list" class="grid">
+        {[1, 2, 3].map((n) => (
+          <li class="panel stack">
+            <p class="mono">{String(n).padStart(2, '0')}</p>
+            <h3>TODO: benefit {n}</h3>
+            <p class="todo">TODO: supporting copy. No metrics until we have sourced numbers.</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section surface-sunken rule-top" aria-labelledby="cta-title">
+    <div class="container stack">
+      <h2 id="cta-title">Start with your floor plan</h2>
+      <p class="todo">TODO: what a first conversation looks like and what to have ready.</p>
+      <p><a href="/contact/">Get in touch with the team</a></p>
+    </div>
+  </section>
+</Base>

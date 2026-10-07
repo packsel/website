@@ -1,0 +1,200 @@
+/* Fonts: self-hosted Latin-1 subsets of IBM Plex (SIL OFL 1.1, see /fonts/OFL.txt). */
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/IBMPlexSans-Regular-Latin1.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/IBMPlexSans-SemiBold-Latin1.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/IBMPlexSansCondensed-SemiBold-Latin1.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/IBMPlexMono-Regular-Latin1.woff2") format("woff2");
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+img, svg, video, picture { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+p, h1, h2, h3, h4, li { overflow-wrap: break-word; }
+ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Base type */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+
+main { flex: 1; }
+main:focus { outline: none; } /* skip-link target, not an interactive element */
+
+h1, h2, h3, h4 {
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); line-height: var(--leading-snug); }
+p { max-width: var(--measure); }
+
+a {
+  color: var(--color-accent-text);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover { text-decoration-thickness: 2px; }
+
+/* Focus ring on every interactive element */
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Layout primitives */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* Vertical rhythm: set --stack-space on the element to change the gap. */
+.stack > * + * { margin-block-start: var(--stack-space, var(--space-4)); }
+.stack-sm { --stack-space: var(--space-2); }
+.stack-lg { --stack-space: var(--space-6); }
+
+.section { padding-block: var(--space-7); }
+@media (min-width: 48rem) {
+  .section { padding-block: var(--space-8); }
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* Surfaces. Depth comes from surface steps and 1px borders only. */
+.surface-raised { background: var(--color-surface-raised); }
+.surface-sunken { background: var(--color-surface-sunken); }
+
+.panel {
+  background: var(--color-surface-raised);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.rule-top { border-top: var(--border-width) solid var(--color-border); }
+
+/* accent-text is 4.32:1 on light surface-sunken, below AA for small text.
+   Inside sunken areas, links and kickers fall back to ink tones. */
+.surface-sunken a:not(.button) { color: var(--color-ink); }
+.surface-sunken .kicker { color: var(--color-ink-secondary); }
+
+/* Type utilities */
+.kicker {
+  font-family: var(--font-condensed);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-secondary);
+}
+
+.lead {
+  font-size: var(--text-md);
+  line-height: var(--leading-snug);
+  color: var(--color-ink-secondary);
+}
+
+.secondary { color: var(--color-ink-secondary); }
+
+/* Buttons */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-5);
+  border: var(--border-width) solid var(--color-border-control);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-ink);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { text-decoration: underline; text-underline-offset: 0.18em; }
+
+.button-primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* Visible placeholder for copy that hasn't been written yet.
+   Start the text with "TODO:" so `grep -r TODO src` finds every one. */
+.todo {
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) dashed var(--color-border-control);
+  border-radius: var(--radius-md);
+  color: var(--color-ink-secondary);
+}
+
+/* Accessibility helpers */
+.visually-hidden:not(:focus):not(:active) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

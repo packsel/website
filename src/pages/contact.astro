@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Brand from '../components/Brand.astro';
+---
+
+<Base
+  title="Contact"
+  description="Contact packsel about leasing autonomous mobile robots for your warehouse."
+>
+  <section class="section" aria-labelledby="page-title">
+    <div class="container stack stack-lg">
+      <div class="stack">
+        <p class="kicker">Contact</p>
+        <h1 id="page-title">Talk to the team</h1>
+        <p class="lead">
+          Questions about leasing robots from <Brand tm />? Reach us here.
+        </p>
+      </div>
+
+      <div class="grid">
+        <section class="panel stack" aria-labelledby="sales-title">
+          <h2 id="sales-title" class="panel__title">Sales</h2>
+          <p class="todo">TODO: sales email address and phone number.</p>
+        </section>
+        <section class="panel stack" aria-labelledby="support-title">
+          <h2 id="support-title" class="panel__title">Support</h2>
+          <p class="todo">TODO: support contact for existing customers, and hours.</p>
+        </section>
+        <section class="panel stack" aria-labelledby="visit-title">
+          <h2 id="visit-title" class="panel__title">Office</h2>
+          <p class="todo">TODO: office address and whether visits are by appointment.</p>
+        </section>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .panel__title { font-size: var(--text-lg); }
+</style>

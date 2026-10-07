@@ -1,0 +1,28 @@
+---
+/**
+ * The packsel name. Pass `tm` for the logo (always) and for the first
+ * mention in body copy on each page (only the first).
+ */
+interface Props {
+  tm?: boolean;
+  class?: string;
+}
+
+const { tm = false, class: className } = Astro.props;
+---
+
+<span class:list={['brand', className]}>packsel{tm && <span class="brand-tm">™</span>}</span>
+
+<style>
+  .brand { white-space: nowrap; }
+
+  /* ™ at 40% size with its top at the parent's cap height.
+     Plex cap height is 0.698em. At 0.4em the glyph top sits at about 0.28em,
+     so it rises 0.42em of the parent, which is 1.05em at its own size. */
+  .brand-tm {
+    font-size: 0.4em;
+    line-height: 0;
+    vertical-align: 1.05em;
+    margin-inline-start: 0.08em;
+  }
+</style>
