@@ -1,50 +1,472 @@
 ---
-import Base from '../layouts/Base.astro';
-import Brand from '../components/Brand.astro';
-import ContactBand from '../components/ContactBand.astro';
+import Arrow from "../components/Arrow.astro";
+import Base from "../layouts/Base.astro";
+import Brand from "../components/Brand.astro";
+import ContactBand from "../components/ContactBand.astro";
 const inputs = [
- {id:'employees',label:'Employees in this workflow',value:20,min:1,max:150,step:1,unit:'people',hint:'Total across all shifts. Include only the work being automated.'},
- {id:'wage',label:'Average hourly wage',value:25,min:10,max:60,step:1,unit:'$/hour',hint:'Base wages, before benefits and payroll costs.'},
- {id:'efficiency',label:'AMR efficiency · labor hours saved',value:30,min:0,max:70,step:5,unit:'%',hint:'Your assumption about the share of current hours freed by automation.'},
- {id:'hours',label:'Weekly hours per employee',value:40,min:5,max:60,step:1,unit:'hours'},
- {id:'robots',label:'Number of AMRs',value:8,min:1,max:40,step:1,unit:'robots'},
- {id:'cost',label:'Monthly cost per AMR',value:1000,min:250,max:2500,step:50,unit:'$/month',hint:'Illustrative pricing. Your proposal will define the actual cost.'}
+  {
+    id: "employees",
+    label: "Employees in this workflow",
+    value: 20,
+    min: 1,
+    max: 150,
+    step: 1,
+    unit: "people",
+    hint: "Total across all shifts. Include only the work being automated.",
+  },
+  {
+    id: "wage",
+    label: "Average hourly wage",
+    value: 25,
+    min: 10,
+    max: 60,
+    step: 1,
+    unit: "$/hour",
+    hint: "Base wages, before benefits and payroll costs.",
+  },
+  {
+    id: "efficiency",
+    label: "AMR efficiency · labor hours saved",
+    value: 30,
+    min: 0,
+    max: 70,
+    step: 5,
+    unit: "%",
+    hint: "Your assumption about the share of current hours freed by automation.",
+  },
+  {
+    id: "hours",
+    label: "Weekly hours per employee",
+    value: 40,
+    min: 5,
+    max: 60,
+    step: 1,
+    unit: "hours",
+  },
+  {
+    id: "robots",
+    label: "Number of AMRs",
+    value: 8,
+    min: 1,
+    max: 40,
+    step: 1,
+    unit: "robots",
+  },
+  {
+    id: "cost",
+    label: "Monthly cost per AMR",
+    value: 1000,
+    min: 250,
+    max: 2500,
+    step: 50,
+    unit: "$/month",
+    hint: "Illustrative pricing. Your proposal will define the actual cost.",
+  },
 ];
 ---
-<Base title="AMR savings calculator" description="Explore potential warehouse labor savings with editable staffing, wage, efficiency, and robot cost assumptions.">
- <section class="container page-intro"><p class="kicker">Your operation. Your numbers.</p><h1>Less travel.<br>Let’s do the math.</h1><p class="lead">Explore a first-pass business case with <Brand tm />. Move the sliders to see how the value of freed labor hours compares with your robot costs.</p></section>
- <section class="container calculator-section" aria-label="AMR savings calculator">
-  <form class="calculator-inputs" id="calculator" onsubmit="return false"><div class="calc-heading"><h2>Build your scenario</h2><button type="reset" class="text-link">Reset ↺</button></div>
-  {inputs.map(input=><div class="calc-field"><div class="calc-label"><label for={input.id}>{input.label}</label><div class="calc-number"><input type="number" id={`${input.id}-number`} aria-label={`${input.label} exact value`} value={input.value} min={input.min} max={input.max} step={input.step}/><span>{input.unit}</span></div></div><input type="range" id={input.id} name={input.id} min={input.min} max={input.max} step={input.step} value={input.value} aria-describedby={input.hint?`${input.id}-hint`:undefined}/>{input.hint&&<p id={`${input.id}-hint`} class="note">{input.hint}</p>}</div>)}
-  </form>
-  <div class="calculator-results"><p class="kicker">Illustrative monthly impact</p><div aria-live="polite" aria-atomic="true"><p class="result-label">Net labor-capacity value</p><div class="calc-total" id="net">$18,000</div><p class="secondary" id="result-description">Value of freed hours, less AMR costs.</p><div class="calc-annual"><span id="annual">$216,000</span> per year</div></div>
-   <dl class="calc-breakdown"><div><dt>Current monthly wages</dt><dd id="baseline">$86,667</dd></div><div><dt>Labor hours freed / month</dt><dd id="freed">1,040 h</dd></div><div><dt>Value of hours freed</dt><dd id="gross">$26,000</dd></div><div><dt>Monthly AMR cost</dt><dd id="fleet">−$8,000</dd></div></dl>
-   <div class="calc-bars" aria-label="Comparison of monthly labor value and AMR cost"><div><span>Value of hours freed</span><strong id="gross-bar-label"></strong></div><div class="calc-track"><span id="gross-bar"></span></div><div><span>AMR cost</span><strong id="cost-bar-label"></strong></div><div class="calc-track cost-track"><span id="cost-bar"></span></div></div>
-   <p class="note">Freed capacity becomes cash savings only if you reduce paid hours, overtime, or future hiring. This draft excludes implementation, integration, benefits, taxes, and other costs. It is not a quote or a forecast.</p>
-   <a class="button button-primary" id="scenario-email" href="mailto:zach@packsel.co">Discuss this scenario ↗</a>
-  </div>
- </section>
- <section class="container section-large"><div class="section-heading"><div><p class="kicker">Make the assumptions yours</p><h2>A starting point.<br>Then a closer look.</h2></div><p class="lead">The next step is to measure your walking time, understand your order mix, and size a fleet around your floor.</p></div><details class="formula-details"><summary>How the estimate works</summary><p>Monthly hours = employees × weekly hours × 52 ÷ 12. Freed hours = monthly hours × assumed labor-hours reduction. Net monthly capacity value = freed hours × hourly wage − robot count × monthly robot cost. Annual value = monthly value × 12.</p><p>Robot count and efficiency are independent assumptions in this draft. It does not yet estimate how many robots your workflow needs.</p></details></section>
- <ContactBand />
+
+<Base
+  title="AMR savings calculator"
+  description="Explore potential warehouse labor savings with editable staffing, wage, efficiency, and robot cost assumptions."
+>
+  <section class="container page-intro">
+    <p class="kicker">Your operation. Your numbers.</p>
+    <h1>
+      Less travel.
+      <br />
+      Let’s do the math.
+    </h1>
+    <p class="lead">
+      Explore a first-pass business case with <Brand tm />. Move the sliders to
+      see how the value of freed labor hours compares with your robot costs.
+    </p>
+  </section>
+  <section
+    class="container calculator-section"
+    aria-label="AMR savings calculator"
+  >
+    <form class="calculator-inputs" id="calculator" onsubmit="return false">
+      <div class="calc-heading">
+        <h2>Build your scenario</h2>
+        <button type="reset" class="text-link">
+          Reset ↺
+        </button>
+      </div>
+      {inputs.map((input) => (
+        <div class="calc-field">
+          <div class="calc-label">
+            <label for={input.id}>{input.label}</label>
+            <div class="calc-number">
+              <input
+                type="number"
+                id={`${input.id}-number`}
+                aria-label={`${input.label} exact value`}
+                value={input.value}
+                min={input.min}
+                max={input.max}
+                step={input.step}
+              />
+              <span>{input.unit}</span>
+            </div>
+          </div>
+          <input
+            type="range"
+            id={input.id}
+            name={input.id}
+            min={input.min}
+            max={input.max}
+            step={input.step}
+            value={input.value}
+            aria-describedby={input.hint ? `${input.id}-hint` : undefined}
+          />
+          {input.hint && (
+            <p id={`${input.id}-hint`} class="note">
+              {input.hint}
+            </p>
+          )}
+        </div>
+      ))}
+    </form>
+    <div class="calculator-results">
+      <p class="kicker">Illustrative monthly impact</p>
+      <div aria-live="polite" aria-atomic="true">
+        <p class="result-label">Net labor-capacity value</p>
+        <div class="calc-total" id="net">
+          $18,000
+        </div>
+        <p class="secondary" id="result-description">
+          Value of freed hours, less AMR costs.
+        </p>
+        <div class="calc-annual">
+          <span id="annual">$216,000</span> per year
+        </div>
+      </div>
+      <dl class="calc-breakdown">
+        <div>
+          <dt>Current monthly wages</dt>
+          <dd id="baseline">$86,667</dd>
+        </div>
+        <div>
+          <dt>Labor hours freed / month</dt>
+          <dd id="freed">1,040 h</dd>
+        </div>
+        <div>
+          <dt>Value of hours freed</dt>
+          <dd id="gross">$26,000</dd>
+        </div>
+        <div>
+          <dt>Monthly AMR cost</dt>
+          <dd id="fleet">−$8,000</dd>
+        </div>
+      </dl>
+      <div
+        class="calc-bars"
+        aria-label="Comparison of monthly labor value and AMR cost"
+      >
+        <div>
+          <span>Value of hours freed</span>
+          <strong id="gross-bar-label"></strong>
+        </div>
+        <div class="calc-track">
+          <span id="gross-bar"></span>
+        </div>
+        <div>
+          <span>AMR cost</span>
+          <strong id="cost-bar-label"></strong>
+        </div>
+        <div class="calc-track cost-track">
+          <span id="cost-bar"></span>
+        </div>
+      </div>
+      <p class="note">
+        Freed capacity becomes cash savings only if you reduce paid hours,
+        overtime, or future hiring. This draft excludes implementation,
+        integration, benefits, taxes, and other costs. It is not a quote or a
+        forecast.
+      </p>
+      <a
+        class="button button-primary"
+        id="scenario-email"
+        href="mailto:zach@packsel.co"
+      >
+        Discuss this scenario <Arrow diagonal />
+      </a>
+    </div>
+  </section>
+  <section class="container section-large">
+    <div class="section-heading">
+      <div>
+        <p class="kicker">Make the assumptions yours</p>
+        <h2>
+          A starting point.
+          <br />
+          Then a closer look.
+        </h2>
+      </div>
+      <p class="lead">
+        The next step is to measure your walking time, understand your order
+        mix, and size a fleet around your floor.
+      </p>
+    </div>
+    <details class="formula-details">
+      <summary>How the estimate works</summary>
+      <p>
+        Monthly hours = employees × weekly hours × 52 ÷ 12. Freed hours =
+        monthly hours × assumed labor-hours reduction. Net monthly capacity
+        value = freed hours × hourly wage − robot count × monthly robot cost.
+        Annual value = monthly value × 12.
+      </p>
+      <p>
+        Robot count and efficiency are independent assumptions in this draft. It
+        does not yet estimate how many robots your workflow needs.
+      </p>
+    </details>
+  </section>
+  <ContactBand />
 </Base>
 <script>
-const form=document.querySelector<HTMLFormElement>('#calculator')!;
-const money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
-const number=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
-const fields=['employees','wage','efficiency','hours','robots','cost'];
-function update(){
- const values=Object.fromEntries(fields.map(id=>[id,Number((document.getElementById(id) as HTMLInputElement).value)]));
- const monthly=values.employees*values.hours*52/12,freed=monthly*values.efficiency/100,gross=freed*values.wage,fleet=values.robots*values.cost,net=gross-fleet;
- const display:Record<string,string>={net:money.format(net),annual:money.format(net*12),baseline:money.format(monthly*values.wage),freed:number.format(freed)+' h',gross:money.format(gross),fleet:'−'+money.format(fleet),'gross-bar-label':money.format(gross),'cost-bar-label':money.format(fleet)};
- Object.entries(display).forEach(([id,value])=>document.getElementById(id)!.textContent=value);
- document.getElementById('result-description')!.textContent=net<0?'AMR costs exceed the labor value in this scenario.':'Value of freed hours, less AMR costs.';
- const max=Math.max(gross,fleet,1);document.getElementById('gross-bar')!.style.width=(gross/max*100)+'%';document.getElementById('cost-bar')!.style.width=(fleet/max*100)+'%';
- const body=`I'd like to discuss this warehouse automation scenario:\n\nEmployees: ${values.employees}\nHourly wage: ${money.format(values.wage)}\nWeekly hours per employee: ${values.hours}\nAssumed labor hours saved: ${values.efficiency}%\nAMRs: ${values.robots}\nMonthly cost per AMR: ${money.format(values.cost)}\n\nEstimated monthly net capacity value: ${money.format(net)}\nIllustrative only; not guaranteed cash savings.`;
- (document.getElementById('scenario-email') as HTMLAnchorElement).href='mailto:zach@packsel.co?subject='+encodeURIComponent('My warehouse automation scenario')+'&body='+encodeURIComponent(body);
-}
-fields.forEach(id=>{const range=document.getElementById(id) as HTMLInputElement;const exact=document.getElementById(id+'-number') as HTMLInputElement;range.addEventListener('input',()=>{exact.value=range.value;update()});exact.addEventListener('input',()=>{if(exact.value===''||!Number.isFinite(exact.valueAsNumber))return;range.value=exact.value;update()});exact.addEventListener('change',()=>{exact.value=range.value;update()})});
-form.addEventListener('reset',()=>setTimeout(update,0));update();
+  const form = document.querySelector<HTMLFormElement>("#calculator")!;
+  const money = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  });
+  const number = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+  const fields = ["employees", "wage", "efficiency", "hours", "robots", "cost"];
+  function update() {
+    const values = Object.fromEntries(
+      fields.map((id) => [
+        id,
+        Number((document.getElementById(id) as HTMLInputElement).value),
+      ]),
+    );
+    const monthly = (values.employees * values.hours * 52) / 12,
+      freed = (monthly * values.efficiency) / 100,
+      gross = freed * values.wage,
+      fleet = values.robots * values.cost,
+      net = gross - fleet;
+    const display: Record<string, string> = {
+      net: money.format(net),
+      annual: money.format(net * 12),
+      baseline: money.format(monthly * values.wage),
+      freed: number.format(freed) + " h",
+      gross: money.format(gross),
+      fleet: "−" + money.format(fleet),
+      "gross-bar-label": money.format(gross),
+      "cost-bar-label": money.format(fleet),
+    };
+    Object.entries(display).forEach(
+      ([id, value]) => (document.getElementById(id)!.textContent = value),
+    );
+    document.getElementById("result-description")!.textContent =
+      net < 0
+        ? "AMR costs exceed the labor value in this scenario."
+        : "Value of freed hours, less AMR costs.";
+    const max = Math.max(gross, fleet, 1);
+    document.getElementById("gross-bar")!.style.width =
+      (gross / max) * 100 + "%";
+    document.getElementById("cost-bar")!.style.width =
+      (fleet / max) * 100 + "%";
+    const body = `I'd like to discuss this warehouse automation scenario:\n\nEmployees: ${values.employees}\nHourly wage: ${money.format(values.wage)}\nWeekly hours per employee: ${values.hours}\nAssumed labor hours saved: ${values.efficiency}%\nAMRs: ${values.robots}\nMonthly cost per AMR: ${money.format(values.cost)}\n\nEstimated monthly net capacity value: ${money.format(net)}\nIllustrative only; not guaranteed cash savings.`;
+    (document.getElementById("scenario-email") as HTMLAnchorElement).href =
+      "mailto:zach@packsel.co?subject=" +
+      encodeURIComponent("My warehouse automation scenario") +
+      "&body=" +
+      encodeURIComponent(body);
+  }
+  fields.forEach((id) => {
+    const range = document.getElementById(id) as HTMLInputElement;
+    const exact = document.getElementById(id + "-number") as HTMLInputElement;
+    range.addEventListener("input", () => {
+      exact.value = range.value;
+      update();
+    });
+    exact.addEventListener("input", () => {
+      if (exact.value === "" || !Number.isFinite(exact.valueAsNumber)) return;
+      range.value = exact.value;
+      update();
+    });
+    exact.addEventListener("change", () => {
+      exact.value = range.value;
+      update();
+    });
+  });
+  form.addEventListener("reset", () => setTimeout(update, 0));
+  update();
 </script>
 <style>
-.calculator-section{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:start}.calc-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--color-border)}.calc-heading h2{font-size:24px}.calc-heading button{border:0;background:none;font-size:13px;cursor:pointer}.calc-field{padding:24px 0;border-bottom:1px solid var(--color-border)}.calc-label{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}.calc-label label{font-size:14px;font-weight:600}.calc-number{display:flex;gap:8px;align-items:center;font:12px var(--font-mono);white-space:nowrap}.calc-number input{width:76px;border:1px solid var(--color-border-control);padding:8px;background:var(--color-surface-raised);border-radius:2px;font:16px var(--font-mono);text-align:right}.calc-field input[type=range]{width:100%;accent-color:var(--color-accent);cursor:pointer;min-height:28px}.calc-field .note{margin-top:8px}.calculator-results{padding:40px;background:var(--color-surface-sunken);position:sticky;top:24px}.calculator-results .kicker{color:var(--color-ink-secondary)}.result-label{margin-top:28px;font-size:16px}.calc-total{font:clamp(32px,4.5vw,60px)/1.3 var(--font-mono);letter-spacing:-.055em;margin:12px 0;overflow-wrap:anywhere}.calc-annual{margin-top:20px;color:var(--color-ink-secondary);font-size:14px}.calc-annual span{font:20px var(--font-mono);color:var(--color-ink)}.calc-breakdown{margin:32px 0;border-top:1px solid var(--color-border-control)}.calc-breakdown>div{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--color-border)}.calc-breakdown dt{font-size:13px}.calc-breakdown dd{font:14px var(--font-mono);white-space:nowrap}.calc-bars{margin-bottom:32px}.calc-bars>div:not(.calc-track){display:flex;justify-content:space-between;gap:16px;font-size:12px}.calc-bars strong{font:12px var(--font-mono)}.calc-track{height:7px;background:var(--color-border);margin:8px 0 20px}.calc-track span{display:block;height:100%;background:var(--color-accent);transition:width .15s}.cost-track span{background:var(--color-ink-secondary)}.calculator-results>.button{margin-top:24px}.formula-details{border-block:1px solid var(--color-border);padding:24px 0}.formula-details summary{cursor:pointer}.formula-details p{margin-top:20px;color:var(--color-ink-secondary)}@media(max-width:800px){.calculator-section{grid-template-columns:1fr;gap:32px}.calculator-results{position:static;padding:28px}.calc-total{font-size:44px}.calc-label{flex-wrap:wrap;gap:12px}.calc-number{margin-left:auto}}@media(prefers-reduced-motion:reduce){.calc-track span{transition:none}}
+  .calculator-section {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .calc-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .calc-heading h2 {
+    font-size: 24px;
+  }
+  .calc-heading button {
+    border: 0;
+    background: none;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .calc-field {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .calc-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .calc-label label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .calc-number {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font: 12px var(--font-mono);
+    white-space: nowrap;
+  }
+  .calc-number input {
+    width: 76px;
+    border: 1px solid var(--color-border-control);
+    padding: 8px;
+    background: var(--color-surface-raised);
+    border-radius: 2px;
+    font: 16px var(--font-mono);
+    text-align: right;
+  }
+  .calc-field input[type="range"] {
+    width: 100%;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+    min-height: 28px;
+  }
+  .calc-field .note {
+    margin-top: 8px;
+  }
+  .calculator-results {
+    padding: 40px;
+    background: var(--color-surface-sunken);
+    position: sticky;
+    top: 24px;
+  }
+  .calculator-results .kicker {
+    color: var(--color-ink-secondary);
+  }
+  .result-label {
+    margin-top: 28px;
+    font-size: 16px;
+  }
+  .calc-total {
+    font: clamp(32px, 4.5vw, 60px)/1.3 var(--font-mono);
+    letter-spacing: -0.055em;
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+  }
+  .calc-annual {
+    margin-top: 20px;
+    color: var(--color-ink-secondary);
+    font-size: 14px;
+  }
+  .calc-annual span {
+    font: 20px var(--font-mono);
+    color: var(--color-ink);
+  }
+  .calc-breakdown {
+    margin: 32px 0;
+    border-top: 1px solid var(--color-border-control);
+  }
+  .calc-breakdown > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .calc-breakdown dt {
+    font-size: 13px;
+  }
+  .calc-breakdown dd {
+    font: 14px var(--font-mono);
+    white-space: nowrap;
+  }
+  .calc-bars {
+    margin-bottom: 32px;
+  }
+  .calc-bars > div:not(.calc-track) {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 12px;
+  }
+  .calc-bars strong {
+    font: 12px var(--font-mono);
+  }
+  .calc-track {
+    height: 7px;
+    background: var(--color-border);
+    margin: 8px 0 20px;
+  }
+  .calc-track span {
+    display: block;
+    height: 100%;
+    background: var(--color-accent);
+    transition: width 0.15s;
+  }
+  .cost-track span {
+    background: var(--color-ink-secondary);
+  }
+  .calculator-results > .button {
+    margin-top: 24px;
+  }
+  .formula-details {
+    border-block: 1px solid var(--color-border);
+    padding: 24px 0;
+  }
+  .formula-details summary {
+    cursor: pointer;
+  }
+  .formula-details p {
+    margin-top: 20px;
+    color: var(--color-ink-secondary);
+  }
+  @media (max-width: 800px) {
+    .calculator-section {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .calculator-results {
+      position: static;
+      padding: 28px;
+    }
+    .calc-total {
+      font-size: 44px;
+    }
+    .calc-label {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .calc-number {
+      margin-left: auto;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .calc-track span {
+      transition: none;
+    }
+  }
 </style>
