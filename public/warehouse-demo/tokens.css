@@ -13,6 +13,10 @@
   --color-ink:             #14161A;
   --color-ink-secondary:   #5B5F66;
 
+  /* Neutral surfaces for the modern homepage. */
+  --color-home-panel: #F5F5F7;
+  --color-home-hover: #EDEEF0;
+
   /* Color: both modes */
   --color-accent:          #E8622A; /* text only at ≥24px, or bold ≥19px */
   --color-on-accent:       #14161A; /* labels on accent fills. Never white. */
@@ -79,6 +83,8 @@
     --color-ink:             #F2EFE9;
     --color-ink-secondary:   #9BA0A8;
     --color-accent-text:     #E8622A;
+    --color-home-panel:      #1D2024;
+    --color-home-hover:      #262B31;
   }
 }
 
@@ -87,3 +93,6 @@
     --container-pad: var(--space-6);
   }
 }
+
+/* Scene text sits over the simulation’s light concrete floor in either theme. */
+:root{--color-demo-stage-ink:#14161A;--color-demo-stage-secondary:#5B5F66}
