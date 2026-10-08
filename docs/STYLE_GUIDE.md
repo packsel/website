@@ -306,3 +306,16 @@ Things this guide asserts but hasn't settled. Resolve and amend.
 ---
 
 *Questions: zach@packsel.co*
+
+## Website design direction — October 2026
+
+The marketing pages follow the requested Apple/Tesla-inspired direction: cool neutral
+surfaces, spacious product imagery, 20–24px card radii and pill buttons. These
+website-specific treatments supersede the near-square radius guidance above.
+The `--color-home-panel` and `--color-home-hover` tokens live in the token file
+and support both themes. Keep the IBM Plex type system and orange accent.
+
+Interactive cards lift on pointer hover, change surface colour and show a
+matching keyboard focus state. Motion uses short transitions and one-time
+entrance reveals; reduced-motion users get surface feedback without movement.
+No-JavaScript visitors can still read and navigate all content.

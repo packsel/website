@@ -1,321 +1,109 @@
 ---
-import Arrow from "../components/Arrow.astro";
-import Base from "../layouts/Base.astro";
-import Brand from "../components/Brand.astro";
-import ContactBand from "../components/ContactBand.astro";
-import Video from "../components/Video.astro";
+import Base from '../layouts/Base.astro';
+import Brand from '../components/Brand.astro';
+import Video from '../components/Video.astro';
 ---
-
-<Base
-  title="packsel · Less walking. More picking."
-  description="Flexible warehouse automation for 3PLs. Explore packsel mobile robots, see zone picking in action, and estimate the savings for your operation."
->
-  <section class="hero container">
-    <div class="hero-copy stack">
-      <p class="kicker">
-        <span class="signal-dot"></span> Warehouse automation, within reach
-      </p>
-      <h1>
-        Less walking.
-        <br />
-        <span class="accent">More picking.</span>
-      </h1>
-      <p class="lead">
-        Put your people where they add value.
-        <br />
-        Let the robots handle the travel.
-      </p>
-      <p class="hero-description">
-        <Brand tm /> brings autonomous mobile robots to 3PL warehouses through a
-        flexible leasing model, built around your operation.
-      </p>
-      <div class="cluster">
-        <a
-          class="button button-primary"
-          href="mailto:zach@packsel.co?subject=Warehouse%20automation"
-        >
-          Explore your options <Arrow diagonal />
-        </a>
-        <a class="text-link" href="/warehouse-demo/index.html">
-          See the warehouse demo <Arrow />
-        </a>
-      </div>
-    </div>
-    <figure class="hero-visual">
-      <img
-        src="/images/warehouse-robots.webp"
-        srcset="/images/warehouse-robots-800.webp 800w, /images/warehouse-robots.webp 1440w"
-        sizes="(max-width: 800px) 100vw, 88vw"
-        alt="packsel shelf robots carrying separate totes through a warehouse aisle"
-        width="1440"
-        height="960"
-        fetchpriority="high"
-      />
-      <figcaption>
-        <span>Built for the work between picks.</span>
-        <span>Product visualization</span>
-      </figcaption>
-    </figure>
-  </section>
-  <div class="container">
-    <div class="capability-rail">
-      <span>Designed around your floor</span>
-      <span>Robots as a service</span>
-      <span>People + automation</span>
-      <a href="/how-it-works/">
-        From assessment to operation <Arrow diagonal />
-      </a>
-    </div>
-  </div>
-  <section class="section-large container">
-    <div class="section-heading">
-      <div>
-        <p class="kicker">A better division of labor</p>
-        <h2>
-          Your people do the picking.
-          <br />
-          Your robots do the moving.
-        </h2>
-      </div>
-      <p class="lead">
-        A warehouse works better when every trip has a purpose. Bring orders to
-        your associates, then move completed picks to packing.
-      </p>
-    </div>
-    <div class="workflow-row">
-      {[
-        {
-          n: "01",
-          title: "Bring work to the zone",
-          body: "AMRs travel between picking zones while associates stay close to the inventory they know.",
-        },
-        {
-          n: "02",
-          title: "Keep orders organized",
-          body: "Separate bins and scan-guided workflows help associates put each item in the right order.",
-        },
-        {
-          n: "03",
-          title: "Keep fulfillment moving",
-          body: "Robots carry picked orders to packing and return for the next assignment.",
-        },
-      ].map((x) => (
-        <article class="workflow-item">
-          <span class="mono step-number">{x.n}</span>
-          <h3>{x.title}</h3>
-          <p>{x.body}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-  <section class="surface-sunken section-large">
-    <div class="container product-feature">
-      <div class="product-plate">
-        <span class="kicker plate-label">Meet your next workhorse</span>
-        <img
-          src="/images/transport-robot.webp"
-          alt="packsel transport robot with a compact base, upright mast, and touchscreen"
-          width="800"
-          height="1200"
-          loading="lazy"
-        />
-        <span class="mono plate-caption">
-          Product visualization · configuration varies
-        </span>
-      </div>
-      <div class="stack product-copy">
-        <p class="kicker">Practical robots. Real work.</p>
-        <h2>
-          A small footprint.
-          <br />A bigger role on
-          <br />
-          your warehouse floor.
-        </h2>
-        <p class="lead">
-          From moving materials to supporting multi-order picking, start with
-          the configuration your workflow needs.
-        </p>
-        <div class="feature-lines">
-          <div>
-            <span class="mono">01</span>
-            <p>
-              <strong>Compact mobile base</strong>
-              <br />
-              Built to move through working environments.
-            </p>
-          </div>
-          <div>
-            <span class="mono">02</span>
-            <p>
-              <strong>Flexible carrying options</strong>
-              <br />
-              Platform and shelf configurations for different loads.
-            </p>
-          </div>
-          <div>
-            <span class="mono">03</span>
-            <p>
-              <strong>Onboard touchscreen</strong>
-              <br />A clear point of interaction on the floor.
-            </p>
-          </div>
-        </div>
-        <a class="text-link" href="/robots/">
-          Explore the robots <Arrow />
-        </a>
-      </div>
-    </div>
-  </section>
-  <section class="section-large container">
-    <div class="section-heading">
-      <div>
-        <p class="kicker">Step inside the workflow</p>
-        <h2>
-          See your warehouse
-          <br />
-          in a different way.
-        </h2>
-      </div>
-      <div class="stack">
-        <p class="lead">
-          Follow an AMR from order assignment to the packing station. Explore
-          the zones, people, and routes that bring it together.
-        </p>
-        <a class="text-link" href="/warehouse-demo/index.html">
-          Launch the interactive demo <Arrow />
-        </a>
-      </div>
-    </div>
-    <a
-      class="demo-preview"
-      href="/warehouse-demo/index.html"
-      aria-label="Launch the interactive 3D warehouse demo"
-    >
-      <img
-        src="/images/warehouse-demo.webp"
-        alt="Overview of the interactive warehouse with rack aisles, zone pickers, and mobile robots"
-        width="1440"
-        height="840"
-        loading="lazy"
-      />
-      <span class="demo-preview-bar">
-        <span>
-          <span class="signal-dot"></span> An illustrative zone-picking
-          operation
-        </span>
-        <span class="button button-primary">
-          Explore in 3D <Arrow diagonal />
-        </span>
-      </span>
-    </a>
-  </section>
-  <section class="savings-teaser section-large">
-    <div class="container split">
-      <div class="stack">
-        <p class="kicker">Build your business case</p>
-        <h2>
-          What could less
-          <br />
-          walking be worth?
-        </h2>
-        <p class="lead">
-          Start with your team, wages, and operating hours. Adjust the
-          assumptions and see how robot costs compare with the value of time
-          saved.
-        </p>
-        <a class="button button-primary" href="/savings/">
-          Estimate your savings <Arrow diagonal />
-        </a>
-      </div>
-      <div
-        class="calculator-illustration"
-        aria-label="Calculator inputs include workforce, wages, efficiency, and robot costs"
-      >
-        <div class="mini-heading">
-          <span class="mono">Your operation. Your assumptions.</span>
-          <Arrow diagonal />
-        </div>
-        {[
-          { label: "Employees in the workflow", width: "64%" },
-          { label: "Average hourly wage", width: "42%" },
-          { label: "Labor hours saved", width: "30%" },
-        ].map((x) => (
-          <div class="mini-slider">
-            <span>{x.label}</span>
-            <div>
-              <i style={`width:${x.width}`}></i>
-            </div>
-          </div>
-        ))}
-        <div class="mini-result">
-          <span>Explore monthly & annual impact</span>
-          <Arrow />
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="section-large container split video-section">
-    <div class="stack">
-      <p class="kicker">From concept to movement</p>
-      <h2>
-        Watch the hardware
-        <br />
-        get to work.
-      </h2>
-      <p class="lead">
-        Take a closer look at the robot platform in motion and the
-        material-handling tasks it can support.
-      </p>
-      <p class="small secondary">
-        The video shows the robot platform. Your final workflow and
-        configuration are defined during assessment.
-      </p>
-    </div>
-    <Video />
-  </section>
-  <section class="section-large container faq-section">
-    <div>
-      <p class="kicker">A few good questions</p>
-      <h2>
-        Before your
-        <br />
-        first robot.
-      </h2>
-    </div>
-    <div class="faq-list">
-      <details>
-        <summary>Is this designed for 3PLs?</summary>
-        <p>
-          Yes. We focus on the picking and transport challenges of small and
-          mid-size warehouses, including 3PL operations with multiple clients
-          and changing order volumes.
-        </p>
-      </details>
-      <details>
-        <summary>Do we need to buy the robots?</summary>
-        <p>
-          packsel’s model is leasing. Fleet size, term, implementation, and
-          support scope are defined in your proposal after we review your
-          operation.
-        </p>
-      </details>
-      <details>
-        <summary>Can this work with our WMS?</summary>
-        <p>
-          We assess your warehouse management system’s API, order data, item
-          locations, and scanning requirements before defining an integration.
-          Compatibility needs to be confirmed for your system.
-        </p>
-      </details>
-      <details>
-        <summary>How much could we save?</summary>
-        <p>
-          That depends on your labor costs, travel time, order profile, and
-          fleet requirements. Our calculator is a starting point for scenarios,
-          followed by a workflow assessment.
-        </p>
-      </details>
-    </div>
-  </section>
-  <ContactBand />
+<Base title="packsel · Less walking. More picking." description="Mobile robots for 3PL warehouses. Let your team focus on picking while packsel handles the travel.">
+<div class="home-redesign">
+<section class="intro">
+<p class="intro-label">Mobile robots for your warehouse.</p>
+<h1>Less walking.<br />More picking.</h1>
+<p class="intro-deck"><Brand tm /> moves the orders.<br />Your people keep picking.</p>
+<div class="home-actions"><a class="home-button" href="/robots/">Meet the robots</a><a class="home-link" href="mailto:zach@packsel.co?subject=Warehouse%20automation">Let’s talk</a></div>
+<figure class="hero-product hero-scene"><img src="/images/factory-shelf-robot.webp" srcset="/images/factory-shelf-robot-800.webp 800w, /images/factory-shelf-robot.webp 1600w" sizes="(max-width: 1408px) calc(100vw - 48px), 1360px" alt="packsel mobile robot on a factory floor, carrying cartons and product-filled totes on shelves behind its touchscreen mast" width="1600" height="900" fetchpriority="high" /><figcaption>Product visualization. Final configuration varies.</figcaption></figure>
+</section>
+<section class="warehouse-story">
+<div class="section-copy" data-reveal><p class="intro-label">A better way to move orders.</p><h2>Keep your people<br />close to the pick.</h2><p>Robots travel between zones and carry completed orders to packing. Associates stay near the inventory they know.</p><a class="home-link" href="/how-it-works/">See how it works</a></div>
+<figure class="photo-placeholder wide-placeholder" data-reveal aria-label="Placeholder for future warehouse photography"><div><span class="placeholder-label">Photography to come</span><p>A robot on your warehouse floor.</p><span>Wide shot · robot moving through a rack aisle</span></div><figcaption>Planned image 01 · Warehouse in operation</figcaption></figure>
+</section>
+<section class="home-pair">
+<a class="home-panel" data-reveal href="/solutions/"><div class="panel-copy"><p class="intro-label">Built around your operation.</p><h2>Your workflow.<br />Your robot fleet.</h2><p>Platform and shelf configurations, with leasing shaped around your warehouse.</p><span class="card-action">Explore solutions</span></div><figure class="photo-placeholder detail-placeholder" aria-label="Placeholder for future product detail photography"><div><span class="placeholder-label">Photography to come</span><p>The details that do the work.</p><span>Close-up · totes, touchscreen, or associate interaction</span></div><figcaption>Planned image 02 · Product detail</figcaption></figure></a>
+<a class="home-panel demo-panel" data-reveal href="/warehouse-demo/"><div class="panel-copy"><p class="intro-label">See the whole workflow.</p><h2>Take a look<br />around the floor.</h2><p>Follow the robots, picking zones, and routes in an illustrative warehouse.</p><span class="card-action">Explore the interactive demo</span></div><div class="home-demo-image"><img src="/images/warehouse-demo.webp" width="1440" height="840" alt="Interactive warehouse demo showing racks, pickers, and robot routes" loading="lazy" /></div></a>
+</section>
+<section class="home-savings" data-reveal><p class="intro-label">Start with your numbers.</p><h2>What could less<br />walking be worth?</h2><p>Explore the value of time saved against the cost of a robot fleet.</p><a class="home-button" href="/savings/">Calculate your savings</a></section>
+<section class="home-video" data-reveal><div><p class="intro-label">See the platform in motion.</p><h2>Made to move.</h2><p>A closer look at the hardware and the tasks it can support.</p></div><Video /></section>
+<section class="home-questions" data-reveal><h2>A few things to know.</h2><div class="faq-list"><details><summary>Is this designed for 3PLs?</summary><p>Yes. We focus on picking and transport in small and mid-size warehouses, including 3PL operations with multiple clients and changing order volumes.</p></details><details><summary>Do we need to buy the robots?</summary><p>packsel’s model is leasing. Fleet size, term, implementation, and support are defined after reviewing your operation.</p></details><details><summary>Can this work with our WMS?</summary><p>We review your system’s API, order data, item locations, and scanning requirements. Compatibility is confirmed during assessment.</p></details></div></section>
+<section class="home-contact" data-reveal><h2>Let’s talk about<br />your warehouse.</h2><a class="home-button" href="mailto:zach@packsel.co?subject=Warehouse%20automation">Get in touch</a></section>
+</div>
 </Base>
+<style>
+.home-redesign{background:var(--color-surface-raised);color:var(--color-ink)}
+.intro{text-align:center;padding:72px 24px 24px;overflow:hidden}.intro-label{font-size:18px;font-weight:600;margin:0 auto 16px;letter-spacing:-.02em}.intro h1{font-size:clamp(48px,6.5vw,88px);line-height:1.04;letter-spacing:-.055em;margin:0}.intro-deck{font-size:clamp(21px,2.2vw,28px);line-height:1.35;margin:24px auto;color:var(--color-ink-secondary)}.home-actions{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}.home-button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 24px;border-radius:var(--radius-full);background:var(--color-accent);color:var(--color-on-accent);font-size:16px;text-decoration:none;line-height:1.35}.home-link{display:inline-block;color:var(--color-accent-text);font-size:18px;text-decoration:none;padding:12px 0}.home-link:hover{text-decoration:underline}.hero-product{margin:32px auto 0;max-width:760px}.hero-product img{height:440px;width:100%;object-fit:contain;display:block}.hero-product figcaption{font-size:12px;color:var(--color-ink-secondary);margin-top:12px}.warehouse-story{padding:100px 32px 72px;background:var(--color-home-panel)}.section-copy{text-align:center;max-width:740px;margin:0 auto 48px}.home-redesign h2{font-size:clamp(36px,4.4vw,60px);line-height:1.07;letter-spacing:-.045em;margin:0 0 24px}.section-copy>p:not(.intro-label),.panel-copy>p:not(.intro-label),.home-savings>p:not(.intro-label),.home-video p:not(.intro-label){font-size:20px;color:var(--color-ink-secondary);line-height:1.5;max-width:580px;margin:0 auto 12px}.photo-placeholder{position:relative;background:var(--color-surface-raised);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;text-align:center;margin:0;min-width:0}.wide-placeholder{height:480px;max-width:1360px;margin:auto;border-radius:20px}.photo-placeholder>div{padding:32px;max-width:560px}.placeholder-label{font-family:var(--font-mono);font-size:12px;color:var(--color-ink-secondary)}.photo-placeholder p{font-size:clamp(24px,3vw,36px);font-weight:600;letter-spacing:-.035em;margin:20px 0 12px}.photo-placeholder div>span:last-child{font-size:14px;color:var(--color-ink-secondary);display:block}.photo-placeholder figcaption{position:absolute;bottom:20px;left:24px;right:24px;font-size:12px;color:var(--color-ink-secondary);text-align:left}.home-pair{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:72px 32px;max-width:1440px;margin:auto;background:var(--color-surface-raised)}.home-panel{background:var(--color-home-panel);color:var(--color-ink);text-align:center;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;border:1px solid transparent;border-radius:24px;min-width:0}.panel-copy{padding:64px 40px 32px}.panel-copy h2{font-size:clamp(32px,3.4vw,48px)}.panel-copy>p:not(.intro-label){font-size:18px;max-width:440px}.detail-placeholder{height:340px;margin:0 24px 24px;background:var(--color-surface-raised);border-radius:16px}.detail-placeholder p{font-size:28px}.home-demo-image{display:block;margin: auto 24px 24px;height:340px;overflow:hidden;border-radius:16px}.home-demo-image img{height:100%;width:100%;object-fit:cover}.home-savings{text-align:center;padding:112px 24px;background:var(--color-home-panel)}.home-savings .home-button{margin-top:24px}.home-video{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:auto;padding:112px 32px}.home-video h2{font-size:48px}.home-video p:not(.intro-label){font-size:18px}.home-questions{max-width:1000px;margin:auto;padding:24px 32px 96px}.home-questions h2{font-size:36px;margin-bottom:40px}.home-contact{text-align:center;background:var(--color-home-panel);padding:96px 24px}.home-contact .home-button{margin-top:8px}
+:global(body:has(.home-redesign) .site-header){background:var(--color-surface-raised);border:0;position:sticky;top:0}:global(body:has(.home-redesign) .header-inner){min-height:64px}:global(body:has(.home-redesign) .wordmark){font-size:24px}:global(body:has(.home-redesign) .wordmark-kicker){display:none}:global(body:has(.home-redesign) .header-cta){background:transparent;border:0;color:var(--color-ink);padding:8px 0;min-height:44px}:global(body:has(.home-redesign) .header-cta span){display:none}:global(body:has(.home-redesign) .menu-toggle){border:0;min-height:44px}
+@media(max-width:900px){.home-pair{grid-template-columns:1fr}.home-video{grid-template-columns:1fr;gap:32px}.panel-copy{padding:56px 24px 24px}.home-demo-image{height:360px}.wide-placeholder{height:380px}}
+@media(max-width:600px){.intro{padding-top:48px}.intro-label{font-size:16px}.hero-product img{height:340px}.hero-product{margin-top:24px}.warehouse-story{padding:64px 16px 48px}.section-copy{margin-bottom:32px}.section-copy>p:not(.intro-label),.home-savings>p:not(.intro-label){font-size:18px}.wide-placeholder{height:320px}.home-pair{padding:48px 16px;gap:24px}.detail-placeholder{margin:0 16px 16px;height:300px}.home-demo-image{height:280px}.home-savings,.home-contact{padding:72px 24px}.home-video{padding:64px 24px}.home-video h2{font-size:36px}.home-questions{padding:16px 24px 64px}.home-questions h2{font-size:30px}.home-actions{gap:24px}.photo-placeholder>div{padding:24px}.photo-placeholder figcaption{bottom:16px;left:16px;right:16px}}
+
+.hero-scene{max-width:1360px;margin-top:48px}.hero-scene img{height:auto;width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center;border-radius:24px}.hero-scene figcaption{text-align:left;padding-inline:4px}
+@media(max-width:600px){.hero-scene{margin-top:32px}.hero-scene img{height:auto;aspect-ratio:4/3;border-radius:16px}}
+
+/* A single motion rhythm: short feedback, slower image and card movement. */
+.home-redesign{--motion-ease:cubic-bezier(.2,.75,.25,1)}
+.home-button,.home-link,.card-action{transition:transform 240ms var(--motion-ease),background-color 240ms ease,color 240ms ease}
+.home-link{border-radius:var(--radius-full);padding:10px 18px;min-height:44px}
+.card-action{display:inline-flex;padding:10px 18px;min-height:44px;color:var(--color-accent-text);border-radius:var(--radius-full);font-size:18px;margin-top:4px}
+.home-panel{transition:transform 420ms var(--motion-ease),background-color 350ms ease,border-color 350ms ease}
+.home-demo-image img{transition:transform 700ms var(--motion-ease)}
+.hero-product img{transition:transform 700ms var(--motion-ease)}
+.home-button:active,.home-link:active{transform:scale(.98)}
+.home-panel:focus-visible{background:var(--color-home-hover);outline-offset:6px}
+.home-panel:focus-visible .card-action{background:var(--color-surface-raised)}
+.home-questions details{padding-inline:20px;border-radius:12px;transition:background-color 220ms ease}
+.home-questions details[open]{background:var(--color-home-panel)}
+.home-questions summary{min-height:64px}
+:global(body:has(.home-redesign) .site-header){border-bottom:1px solid var(--color-border)}
+:global(body:has(.home-redesign) .header-inner){max-width:1440px;min-height:72px}
+:global(body:has(.home-redesign) #primary-nav){gap:20px}
+:global(body:has(.home-redesign) .nav-list){gap:4px}
+:global(body:has(.home-redesign) .nav-list a),:global(body:has(.home-redesign) .header-cta),:global(body:has(.home-redesign) .menu-toggle){padding:10px 16px;border-radius:8px;transition:background-color 220ms ease,transform 220ms ease;color:var(--color-ink);text-decoration:none;min-height:44px}
+:global(body:has(.home-redesign) .header-cta){background:var(--color-home-panel)}
+@media(hover:hover) and (pointer:fine){
+ .home-button:hover{transform:translateY(-3px);background:var(--color-home-hover);color:var(--color-ink);outline:1px solid var(--color-border-control);outline-offset:0}
+ .home-link:hover{transform:translateY(-2px);background:var(--color-home-hover);color:var(--color-ink);text-decoration:none}
+ .home-panel:hover{transform:translateY(-8px);background:var(--color-home-hover);border-color:var(--color-border)}
+ .home-panel:hover .card-action{background:var(--color-surface-raised);color:var(--color-ink);transform:translateY(-2px)}
+ .home-panel:hover .home-demo-image img{transform:scale(1.035)}
+ .hero-product:hover img{transform:scale(1.025)}
+ .home-questions details:hover{background:var(--color-home-panel)}
+ :global(body:has(.home-redesign) .nav-list a:hover),:global(body:has(.home-redesign) .header-cta:hover),:global(body:has(.home-redesign) .menu-toggle:hover){background:var(--color-home-hover);transform:translateY(-2px);text-decoration:none}
+}
+.home-button:focus-visible,.home-link:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-ring-offset)}
+@media(max-width:900px){:global(body:has(.home-redesign) #primary-nav){background:var(--color-surface-raised)}:global(body:has(.home-redesign) .nav-list a){padding:14px 16px}.home-pair{padding-inline:24px}}
+@media(max-width:600px){.home-pair{padding-inline:16px}.home-panel{border-radius:20px}.home-demo-image{margin: auto 16px 16px}.home-link,.card-action{font-size:16px}.home-actions{gap:12px}.home-questions details{padding-inline:12px}}
+@media(prefers-reduced-motion:reduce){.home-redesign *,:global(body:has(.home-redesign) .site-header *){animation:none!important;transition:none!important;scroll-behavior:auto!important}.home-button,.home-link{transform:none!important}.home-panel:hover,.home-button:hover,.home-link:hover,.hero-product:hover img,.home-panel:hover .home-demo-image img,.home-panel:hover .card-action,:global(body:has(.home-redesign) .nav-list a:hover),:global(body:has(.home-redesign) .header-cta:hover),:global(body:has(.home-redesign) .menu-toggle:hover){transform:none}}
+</style>
+
+<script>
+const home = document.querySelector<HTMLElement>('.home-redesign');
+if (home) {
+  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const animations = new Set<Animation>();
+  const animateIn = (element: HTMLElement, delay = 0) => {
+    if (preference.matches) return;
+    const animation = element.animate(
+      [{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'translateY(0)' }],
+      { duration: 700, delay, easing: 'cubic-bezier(.2,.75,.25,1)', fill: 'backwards' }
+    );
+    animations.add(animation);
+    animation.finished.then(() => animations.delete(animation)).catch(() => animations.delete(animation));
+  };
+  home.querySelectorAll<HTMLElement>('.intro > :not(.hero-product)').forEach((element, index) => animateIn(element, index * 65));
+  const product = home.querySelector<HTMLElement>('.hero-product');
+  if (product) animateIn(product, 180);
+  if ('IntersectionObserver' in window && !preference.matches) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        animateIn(entry.target as HTMLElement);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+    home.querySelectorAll<HTMLElement>('[data-reveal]').forEach(element => observer.observe(element));
+    preference.addEventListener('change', () => {
+      if (preference.matches) {
+        observer.disconnect();
+        animations.forEach(animation => animation.cancel());
+      }
+    });
+  }
+}
+</script>
