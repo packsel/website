@@ -34,9 +34,11 @@
 
   /* Radius */
   --radius-sm:   2px;
-  --radius-md:   4px;   /* buttons, inputs */
-  --radius-lg:   8px;   /* panels */
-  --radius-full: 999px;
+  --radius-md:   4px;   /* inputs, table cells */
+  --radius-lg:   8px;   /* thumbnails, small cards */
+  --radius-xl:   16px;  /* media inside a card */
+  --radius-2xl:  24px;  /* cards, panels, hero media */
+  --radius-full: 999px; /* buttons and controls */
 
   /* Borders and focus */
   --border-width: 1px;

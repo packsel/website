@@ -145,15 +145,20 @@ Fonts are self-hosted as `woff2` with `font-display: swap`. Don't add a fourth f
 `space-3`–`space-5`; card and section gaps `space-6`–`space-8`. Never eyeball a gap between
 two steps.
 
-**Radius** stays near-square — packsel builds hardware, and its screens should read like an
-instrument panel, not a rounded consumer app.
+**Radius** is soft. As of October 2026 the website uses pill buttons and generously rounded
+cards and media; this replaces the earlier near-square rule. Use the scale, not one-off values:
 
 | Token | Value | Use |
 |---|---|---|
 | `radius-sm` | 2px | Tags, chips, checkboxes |
-| `radius-md` | 4px | Buttons, inputs, small cards |
-| `radius-lg` | 8px | Panels, modals, large cards |
-| `radius-full` | 999px | Status dots, avatars, pill toggles — sparingly |
+| `radius-md` | 4px | Inputs, table cells, small inline elements |
+| `radius-lg` | 8px | Thumbnails, small cards |
+| `radius-xl` | 16px | Images and media placed inside a card |
+| `radius-2xl` | 24px | Cards, panels, modals, hero media |
+| `radius-full` | 999px | Buttons and other controls, status dots, avatars |
+
+When a rounded element sits inside another, step down one size (a 16px image inside a 24px
+card) so the corners stay concentric.
 
 **There are no shadow tokens, by design.** Separate surfaces with a surface step
 (`surface` → `surface-raised`) or a `border`. No drop shadows anywhere.
@@ -166,6 +171,15 @@ instrument panel, not a rounded consumer app.
 | Active / selected | Fill `accent`, label `on-accent` |
 | Disabled | `ink-secondary` on `surface-sunken`, no `border-control` outline |
 | Focus | **2px solid `accent`, 2px offset.** One rule, every element, both themes |
+
+### Website surfaces and motion
+
+The marketing pages use cool neutral panels (`--color-home-panel`, `--color-home-hover`, in the
+token file for both themes) and spacious product imagery, with IBM Plex and the orange accent
+unchanged. Interactive cards lift slightly on pointer hover, change surface colour, and show a
+matching keyboard focus state. Motion is short transitions and one-time entrance reveals;
+reduced-motion users get the surface change without movement. Every page must stay readable
+and navigable without JavaScript.
 
 ---
 
@@ -253,7 +267,8 @@ Tokens live in one file and nothing hardcodes a hex.
   --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
   --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
 
-  --radius-sm: 2px; --radius-md: 4px; --radius-lg: 8px; --radius-full: 999px;
+  --radius-sm: 2px; --radius-md: 4px; --radius-lg: 8px;
+  --radius-xl: 16px; --radius-2xl: 24px; --radius-full: 999px;
 
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-sans-condensed: "IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
@@ -306,16 +321,3 @@ Things this guide asserts but hasn't settled. Resolve and amend.
 ---
 
 *Questions: zach@packsel.co*
-
-## Website design direction — October 2026
-
-The marketing pages follow the requested Apple/Tesla-inspired direction: cool neutral
-surfaces, spacious product imagery, 20–24px card radii and pill buttons. These
-website-specific treatments supersede the near-square radius guidance above.
-The `--color-home-panel` and `--color-home-hover` tokens live in the token file
-and support both themes. Keep the IBM Plex type system and orange accent.
-
-Interactive cards lift on pointer hover, change surface colour and show a
-matching keyboard focus state. Motion uses short transitions and one-time
-entrance reveals; reduced-motion users get surface feedback without movement.
-No-JavaScript visitors can still read and navigate all content.
