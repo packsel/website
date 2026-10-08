@@ -15,6 +15,7 @@
 
   /* Color: both modes */
   --color-accent:          #E8622A; /* text only at ≥24px, or bold ≥19px */
+  --color-on-ink:          #F7F5F2; /* text on the fixed dark CTA fill */
   --color-on-accent:       #14161A; /* labels on accent fills. Never white. */
   --color-accent-text:     #B94A1E; /* links and small accent text */
 

@@ -1,0 +1,169 @@
+---
+const rows = [88, 174, 260];
+const cols = [86, 222, 358];
+---
+
+<figure class="warehouse-flow">
+  <div class="flow-heading">
+    <span class="mono">Zone picking / floor view</span>
+    <span class="mono">Illustrative layout</span>
+  </div>
+  <svg
+    viewBox="0 0 640 400"
+    role="img"
+    aria-label="Warehouse diagram showing shelving zones connected by an orange robot route to packing stations"
+  >
+    <rect class="floor" x="24" y="32" width="592" height="336" rx="4" />
+    <g class="floor-lines" fill="none">
+      {[72, 120, 168, 216, 264, 312, 360, 408, 456, 504, 552].map((x) => (
+        <path d={`M${x} 32V368`} />
+      ))}
+      {[80, 128, 176, 224, 272, 320].map((y) => (
+        <path d={`M24 ${y}H616`} />
+      ))}
+    </g>
+    <g class="racks">
+      {rows.map((y) =>
+        cols.map((x) => (
+          <g>
+            <rect x={x} y={y} width="84" height="40" rx="2" />
+            <path
+              d={`M${x + 28} ${y}v40 M${x + 56} ${y}v40 M${x} ${y + 20}h84`}
+            />
+          </g>
+        )),
+      )}
+    </g>
+    <path class="route" d="M62 340V64H198V150H470V322H554" fill="none" />
+    <path
+      class="route route-secondary"
+      d="M334 64V236H198V322H470"
+      fill="none"
+    />
+    <g class="stations">
+      <rect x="526" y="86" width="58" height="54" rx="3" />
+      <rect x="526" y="174" width="58" height="54" rx="3" />
+      <rect x="526" y="294" width="58" height="54" rx="3" />
+    </g>
+    <g class="station-detail" fill="none">
+      <path d="M540 102h30v22h-30z M555 102v22 M540 190h30v22h-30z M555 190v22 M540 310h30v22h-30z M555 310v22" />
+    </g>
+    <g class="robots">
+      {[
+        [198, 64],
+        [334, 236],
+        [470, 150],
+      ].map(([x, y]) => (
+        <g transform={`translate(${x} ${y})`}>
+          <rect x="-13" y="-13" width="26" height="26" rx="5" />
+          <path d="M-6 -5h12v10H-6z M-3 -9h6" />
+        </g>
+      ))}
+    </g>
+    <g class="floor-labels">
+      <text x="86" y="57">
+        Picking zones
+      </text>
+      <text x="526" y="57">
+        Packing
+      </text>
+      <text x="86" y="354">
+        Storage + aisles
+      </text>
+    </g>
+  </svg>
+  <figcaption>
+    <span class="legend">
+      <i></i> AMR travel route
+    </span>
+    <span>People pick. Robots transport.</span>
+  </figcaption>
+</figure>
+<style>
+  .warehouse-flow {
+    width: 100%;
+    background: var(--color-surface-sunken);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+  .flow-heading,
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  .flow-heading .mono {
+    font-size: var(--text-xs);
+  }
+  svg {
+    width: 100%;
+    margin-block: var(--space-4);
+  }
+  .floor {
+    fill: var(--color-surface);
+    stroke: var(--color-border-control);
+  }
+  .floor-lines {
+    stroke: var(--color-border);
+    stroke-width: 0.5;
+  }
+  .racks rect,
+  .stations rect {
+    fill: var(--color-surface-raised);
+    stroke: var(--color-border-control);
+  }
+  .racks path,
+  .station-detail {
+    stroke: var(--color-border-control);
+  }
+  .route {
+    stroke: var(--color-accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .route-secondary {
+    stroke-dasharray: 5 7;
+  }
+  .robots rect {
+    fill: var(--color-accent);
+    stroke: var(--color-on-accent);
+    stroke-width: 1.5;
+  }
+  .robots path {
+    fill: none;
+    stroke: var(--color-on-accent);
+    stroke-width: 1.5;
+  }
+  .floor-labels {
+    fill: var(--color-ink-secondary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  figcaption {
+    color: var(--color-ink-secondary);
+    font-size: var(--text-xs);
+  }
+  .legend {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .legend i {
+    width: 16px;
+    height: 2px;
+    background: var(--color-accent);
+  }
+  @media (max-width: 35rem) {
+    .warehouse-flow {
+      padding: var(--space-4);
+    }
+    .flow-heading,
+    figcaption {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+  }
+</style>
