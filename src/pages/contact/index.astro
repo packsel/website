@@ -1,0 +1,109 @@
+---
+import Base from '../../layouts/Base.astro';
+import Brand from '../../components/Brand.astro';
+
+// Submissions are relayed to the sales inbox by FormSubmit (formsubmit.co), because the
+// site is static hosting with no server of its own. The first submission sends a one-time
+// activation email to sales@packsel.co; nothing is delivered until that link is clicked.
+const salesEmail = 'sales@packsel.co';
+const thanksUrl = new URL('/contact/thanks/', Astro.site).href;
+---
+<Base title="Contact" description="Contact packsel about leasing mobile robots for your warehouse. Send a short message or email sales@packsel.co.">
+<div class="interior">
+<section class="page-hero"><p class="page-eyebrow">Let’s talk.</p><h1>Start with<br />your warehouse.</h1><p class="page-deck">Tell <Brand tm /> what you’re moving,<br />and what you’d like to improve.</p></section>
+
+<section class="content-wrap contact-grid">
+  <form class="contact-form" action={`https://formsubmit.co/${salesEmail}`} method="POST" data-reveal>
+    <span class="asset-tag">Send a message</span>
+    <h2>Tell us about your operation.</h2>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="cf-name">Name</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="cf-email">Work email</label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" required />
+      </div>
+    </div>
+    <div class="field">
+      <label for="cf-company">Company <span>optional</span></label>
+      <input id="cf-company" name="company" type="text" autocomplete="organization" />
+    </div>
+    <div class="field">
+      <label for="cf-message">What would you like to move?</label>
+      <textarea id="cf-message" name="message" rows="5" required placeholder="A picking workflow, a transport route, a question…"></textarea>
+    </div>
+
+    <!-- FormSubmit settings -->
+    <input type="hidden" name="_subject" value="New enquiry from packsel.co" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_next" value={thanksUrl} />
+    <!-- Spam trap: people never see or fill this. -->
+    <div class="honeypot" aria-hidden="true"><label for="cf-honey">Leave this empty</label><input id="cf-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" /></div>
+
+    <div class="form-actions">
+      <button class="button button-primary" type="submit">Send message</button>
+      <p class="form-note">Goes straight to our sales inbox. We only use it to reply.</p>
+    </div>
+  </form>
+
+  <aside class="contact-aside" data-reveal>
+    <div class="email-card">
+      <span class="asset-tag">Prefer email?</span>
+      <a class="contact-email" href={`mailto:${salesEmail}`}>{salesEmail}</a>
+      <p>Send a floor plan, describe a workflow, or ask a question.</p>
+      <a class="button" href={`mailto:${salesEmail}?subject=Warehouse%20automation%20enquiry`}>Email sales</a>
+    </div>
+    <div class="helpful">
+      <h2>Useful to include</h2>
+      <ul class="clean-list"><li><strong>Where you work</strong>Warehouse location and approximate size.</li><li><strong>How work moves</strong>Picking process, team size, shifts and daily volume.</li><li><strong>What needs to change</strong>Your WMS and the main constraint you want to solve.</li></ul>
+    </div>
+    <a class="contact-link-row" href="/warehouse-demo/"><span>Still exploring?</span><strong>Walk through the warehouse demo</strong></a>
+    <a class="contact-link-row" href="/savings/"><span>Building a business case?</span><strong>Try the savings calculator</strong></a>
+  </aside>
+</section>
+</div>
+</Base>
+
+<style>
+  .contact-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; padding-bottom: 96px; }
+
+  .contact-form { --neu-bg: var(--color-home-panel); background: var(--color-home-panel); border-radius: var(--radius-2xl); padding: clamp(24px, 4vw, 48px); display: grid; gap: 20px; }
+  .contact-form .asset-tag { justify-self: start; }
+  .contact-form h2 { font-size: clamp(26px, 2.6vw, 34px); line-height: 1.1; letter-spacing: -0.03em; margin: 0; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .field { display: grid; gap: 8px; min-width: 0; }
+  .field label { font-size: 15px; font-weight: 600; }
+  .field label span { font-weight: 400; color: var(--color-ink-secondary); font-size: 14px; }
+  .field input, .field textarea {
+    width: 100%; font: inherit; font-size: 16px; color: var(--color-ink);
+    background: var(--color-surface-raised); border: 1px solid var(--color-border-control); border-radius: var(--radius-lg);
+    padding: 12px 14px; min-height: 48px;
+  }
+  .field textarea { resize: vertical; min-height: 128px; line-height: 1.5; }
+  .field input::placeholder, .field textarea::placeholder { color: var(--color-ink-secondary); opacity: 1; }
+  .field input:focus-visible, .field textarea:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+  .field input:user-invalid, .field textarea:user-invalid { border-color: var(--color-accent-text); border-width: 2px; }
+  .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 4px; }
+  .form-note { font-size: 14px; color: var(--color-ink-secondary); margin: 0; }
+
+  .contact-aside { display: grid; gap: 16px; }
+  .email-card { border: 1px solid var(--color-border); border-radius: var(--radius-2xl); padding: 28px 28px 32px; background: var(--color-surface-raised); }
+  .email-card .contact-email { display: block; margin: 18px 0 8px; font-family: var(--font-mono); font-size: clamp(22px, 2.4vw, 30px); color: var(--color-ink); text-decoration: none; overflow-wrap: anywhere; }
+  .email-card .contact-email:hover { text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 6px; }
+  .email-card p { color: var(--color-ink-secondary); margin: 0 0 20px; }
+  .helpful { padding: 8px 4px; }
+  .helpful h2 { font-size: 22px; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .contact-aside .contact-link-row { margin-top: 0; }
+
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .field-row { grid-template-columns: 1fr; }
+  }
+</style>

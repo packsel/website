@@ -19,6 +19,7 @@ const siteName = 'packsel';
 const isHome = Astro.url.pathname === '/';
 const fullTitle = isHome ? title : `${title} · ${siteName}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const noindex = Astro.url.pathname.startsWith('/contact/thanks');
 ---
 
 <!doctype html>
@@ -29,6 +30,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#E9EEF0" media="(prefers-color-scheme: light)" />
