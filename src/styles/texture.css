@@ -47,15 +47,19 @@ html body.modern-site .contact-band::before {
   height: 5px;
 }
 
-/* ---------- Page surface: the cool blue-grey everywhere ---------- */
+/* ---------- Where the blue goes ----------
+   Pages, header and footer are white. Bands, panels and stages use the cool blue-grey. */
 html body.modern-site,
 html body.modern-site :is(.interior, .home-redesign, .home-pair, .site-header, .site-footer) {
-  background-color: var(--color-surface);
+  background-color: var(--color-surface-raised);
 }
-/* Neumorphic keys take their colour from what they sit on. White panels say so here. */
+/* Neumorphic keys take their colour from what they sit on. */
 html body.modern-site :is(.contact-band, .warehouse-story, .home-savings, .home-contact, .home-panel,
-  .neutral-band, .rb-builds-band, .build, .contact-surface, .contact-link-row, .feature-card,
-  .step-card, .spec-panel, .calculator-inputs, .calculator-results, .datasheet, .rb-plate) {
+  .neutral-band, .rb-builds-band, .contact-surface, .contact-link-row) {
+  --neu-bg: var(--color-home-panel);
+}
+html body.modern-site :is(.build, .feature-card, .step-card, .spec-panel, .calculator-inputs,
+  .calculator-results, .datasheet, .rb-plate) {
   --neu-bg: var(--color-surface-raised);
 }
 html body.modern-site .ink-band { --neu-bg: #121417; }

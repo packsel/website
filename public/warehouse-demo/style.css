@@ -74,7 +74,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 header {
   position: relative; height: var(--header-h); padding: 5px 32px 0;
   display: flex; align-items: center; gap: 24px;
-  background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-raised); border-bottom: 1px solid var(--color-border);
 }
 header::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--tape); }
 .brand { display: flex; align-items: flex-start; text-decoration: none; color: var(--color-ink); font-size: 24px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
@@ -141,15 +141,15 @@ header > .button { margin-left: 0; }
 .label-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-accent); }
 
 /* ---------- Metrics footer ---------- */
-footer { height: var(--footer-h); display: flex; align-items: center; padding: 0 32px; background: var(--color-surface); border-top: 1px solid var(--color-border); }
+footer { height: var(--footer-h); display: flex; align-items: center; padding: 0 32px; background: var(--color-surface-raised); border-top: 1px solid var(--color-border); }
 footer > div { flex: 1; display: flex; flex-direction: column; gap: 6px; padding-left: 24px; border-right: 1px solid var(--color-border); }
 footer > div:first-child { padding-left: 0; }
 .metric-value { font-family: var(--font-mono); font-size: 26px; line-height: 1; color: var(--color-ink); }
 footer > div > span:last-child { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--color-ink-secondary); }
 footer .simulation-note { flex: 0.85; border: 0; font-size: 12px; line-height: 1.6; color: var(--color-ink-secondary); }
 
-/* Keys on white panels take the panel colour. */
-.detail, .story, dialog { --neu-bg: var(--color-surface-raised); }
+/* Keys over the blue stage take the stage colour; panels and chrome are white (the default). */
+#stage > .top-right { --neu-bg: var(--demo-stage); }
 
 /* ---------- Robot / worker detail panel ---------- */
 .detail {

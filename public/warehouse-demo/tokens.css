@@ -13,9 +13,9 @@
   --color-ink:             #14161A;
   --color-ink-secondary:   #4F5B64;
 
-  /* Panels that sit on the page surface. */
-  --color-home-panel: #FFFFFF;
-  --color-home-hover: #F2F5F7;
+  /* Pages are white; the cool blue-grey is for bands, panels and stages within them. */
+  --color-home-panel: #E9EEF0;
+  --color-home-hover: #E1E8EB;
 
   /* Color: both modes */
   --color-accent:          #E8622A; /* text only at ≥24px, or bold ≥19px */
@@ -76,7 +76,7 @@
      Surfaces still separate by tone steps and 1px borders. */
   --color-accent-lit:      #F5874F; /* lighter end of the orange key's dish */
   --color-accent-deep:     #D9571F; /* darker end; ink on it is 4.6:1 */
-  --neu-bg:                var(--color-surface);
+  --neu-bg:                var(--color-surface-raised);
   --neu-shadow-dark:       rgba(93, 115, 129, 0.34);
   --neu-shadow-light:      rgba(255, 255, 255, 0.95);
   --neu-tint-dark:         #5D7381;

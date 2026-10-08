@@ -64,8 +64,8 @@ neutrals (October 2026; they replaced the original warm, paper-toned neutrals).
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `surface` | `#E9EEF0` | `#15171A` | Page and app background: a cool blue-grey, the warehouse demo's stage |
-| `surface-raised` | `#FFFFFF` | `#1D2024` | Cards, panels, anything above the page |
+| `surface` | `#E9EEF0` | `#15171A` | Cool blue-grey for bands, panels and stages (the warehouse demo's floor). Not for page backgrounds, headers or footers |
+| `surface-raised` | `#FFFFFF` | `#1D2024` | Page background, header, footer, and cards placed on a blue band |
 | `surface-sunken` | `#DDE4E8` | `#1A1D21` | Wells, inset fields, table row stripes |
 | `border` | `#D3DCE0` | `#262B31` | Hairline dividers, card edges — decorative only |
 | `border-control` | `#6B7B85` | `#727982` | Input and toggle outlines |
