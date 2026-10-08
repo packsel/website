@@ -34,9 +34,11 @@
 
   /* Radius */
   --radius-sm:   2px;
-  --radius-md:   4px;   /* buttons, inputs */
-  --radius-lg:   8px;   /* panels */
-  --radius-full: 999px;
+  --radius-md:   4px;   /* inputs, table cells */
+  --radius-lg:   8px;   /* thumbnails, small cards */
+  --radius-xl:   16px;  /* media inside a card */
+  --radius-2xl:  24px;  /* cards, panels, hero media */
+  --radius-full: 999px; /* buttons and controls */
 
   /* Borders and focus */
   --border-width: 1px;
@@ -67,6 +69,20 @@
 
   --tracking-kicker: 0.12em;
 
+  /* Tactile controls. Buttons are the one place gradients and shadows are allowed:
+     they read as physical keys (lit top edge, solid skirt below, press-down on click).
+     Surfaces still separate by tone steps and 1px borders. */
+  --color-accent-lit:      #F2804F; /* top of the orange key */
+  --color-accent-deep:     #A8441B; /* skirt under the orange key */
+  --key-cap-top:           #FFFFFF;
+  --key-cap-bottom:        #EDE8DF;
+  --key-skirt:             #CFC6B5;
+  --key-highlight:         rgba(255, 255, 255, 0.55);
+  --key-cast:              rgba(20, 22, 26, 0.28);
+  --key-travel:            3px;
+  --grain-opacity:         0.035;
+  --dot-grid:              rgba(131, 118, 95, 0.22);
+
   /* Layout */
   --measure:        68ch;
   --container-max:  72rem;
@@ -85,6 +101,13 @@
     --color-accent-text:     #E8622A;
     --color-home-panel:      #1D2024;
     --color-home-hover:      #262B31;
+    --key-cap-top:           #2B2F35;
+    --key-cap-bottom:        #1F2226;
+    --key-skirt:             #0C0D0F;
+    --key-highlight:         rgba(255, 255, 255, 0.10);
+    --key-cast:              rgba(0, 0, 0, 0.55);
+    --grain-opacity:         0.06;
+    --dot-grid:              rgba(155, 160, 168, 0.18);
   }
 }
 
@@ -93,6 +116,3 @@
     --container-pad: var(--space-6);
   }
 }
-
-/* Scene text sits over the simulation’s light concrete floor in either theme. */
-:root{--color-demo-stage-ink:#14161A;--color-demo-stage-secondary:#5B5F66}

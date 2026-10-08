@@ -76,8 +76,9 @@ beacon, and the `packsel.co` link the brand grew from.
 
 ### Rules
 
-- **Never introduce a second brand hue.** No blue, no green, no gradient between two
-  oranges. `accent` is spent, not decorated.
+- **Never introduce a second brand hue.** No blue, no green. `accent` is spent, not
+  decorated. The only orange gradient is the face of a primary key (`accent-lit` →
+  `accent`), described in §4.
 - `accent` as text is only legal at **24px+, or bold 19px+**. On a light surface it reads
   3.1:1 — below the 4.5:1 small-text floor. For a link or a small line of accent copy, use
   `accent-text`.
@@ -160,8 +161,45 @@ cards and media; this replaces the earlier near-square rule. Use the scale, not 
 When a rounded element sits inside another, step down one size (a 16px image inside a 24px
 card) so the corners stay concentric.
 
-**There are no shadow tokens, by design.** Separate surfaces with a surface step
-(`surface` → `surface-raised`) or a `border`. No drop shadows anywhere.
+**Surfaces have no shadows. Controls do.** Separate cards, panels and sections with a
+surface step (`surface` → `surface-raised`) or a `border`, never a drop shadow.
+Buttons are the exception: they are drawn as physical keys on a control panel.
+
+### Tactile keys
+
+| Part | Primary (orange) | Secondary (cap) |
+|---|---|---|
+| Face | Gradient `accent-lit` → `accent` | Gradient `key-cap-top` → `key-cap-bottom` |
+| Edge | 1px `accent-deep` | 1px `key-skirt` |
+| Skirt | Solid 3px (`key-travel`) of `accent-deep` below the face | Solid 3px of `key-skirt` |
+| Lit edge | 1px inner highlight on the top edge | `key-highlight` |
+| Cast | One soft shadow under the skirt, `key-cast` | Same |
+| Hover | Rises 1px, skirt grows 1px | Same |
+| Press | Moves down the full `key-travel`; skirt disappears; inner shadow | Same |
+
+Labels on the orange key are `on-accent` (dark ink), as everywhere. Keys are pill-shaped
+(`radius-full`). Text links are not keys: they are `accent-text` with a tape underline
+and an arrow that moves on hover. Segmented controls (the demo's view and speed
+switches) sit in an inset well, and the active segment is a small orange key.
+
+### Texture and character
+
+packsel should feel like a warehouse floor, not a showroom. Five motifs, used sparingly:
+
+- **Grain.** A faint paper grain over the whole page (`grain-opacity`, ~3.5%). Never
+  stronger, never on top of photography alone.
+- **Hazard tape.** Diagonal `accent` / `on-accent` stripes, 10px each. Only as a thin edge
+  (5–8px): the top of the header, the top of the contact band, the head of a datasheet.
+  Never a fill, never behind text.
+- **Floor lines.** Dashed `accent` rules (2px, about 55% strength) between rows on a
+  "job board", like taped lanes on a floor.
+- **Asset tags.** Section labels set as equipment tags: `mono`, 12px, uppercase, a
+  `border-control` outline, `radius-sm`, and a small punched hole on the left.
+- **Drawing-board dot grid.** 1px dots on a 16px grid (`dot-grid`) behind product
+  cut-outs, route diagrams and spec plates.
+
+A dark "lights down" band (`ink-band`) is allowed once per page, for video or a single
+hero moment.
 
 ### States
 
@@ -236,10 +274,10 @@ that family at review; packsel does not mix icon styles.
 
 ## 8. Things not to do
 
-- Blue-to-purple gradients, or any gradient.
+- Blue-to-purple gradients, or any gradient outside a key face.
 - Emoji as decoration.
 - Rounded cards with a coloured left border.
-- Drop shadows standing in for hierarchy.
+- Drop shadows on cards, panels or images. Shadows belong to keys only.
 - A second accent colour, including a "success green" or "danger red," until status colours
   are designed properly (see below).
 - Fabricated metrics, customer names, testimonials or case studies in any artefact —
@@ -296,7 +334,7 @@ Tokens live in one file and nothing hardcodes a hex.
 - [ ] Focus ring present and visible on every interactive element
 - [ ] `accent` used as small text? → should be `accent-text`
 - [ ] White on an accent fill? → should be `on-accent`
-- [ ] Any drop shadow? → should be a surface step or a border
+- [ ] Any drop shadow on something that isn't a button? → should be a surface step or a border
 - [ ] ™ on the first mention and on the lockup, nowhere else on the page
 - [ ] No invented figures or unmarked placeholder content
 

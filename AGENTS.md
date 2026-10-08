@@ -17,7 +17,7 @@ This is the marketing site for packsel™, live at https://packsel.co. The brand
 
 - `main` is live. Anything merged into `main` deploys to packsel.co within about a minute. Work on a branch and open a pull request. Run `npm run build` first.
 - Never edit, merge or open a pull request from the `deploy` branch. It holds generated output.
-- Don't hardcode colour values. Use the tokens in `src/styles/tokens.css`. The site prefixes colour tokens with `--color-` (`--color-surface`, `--color-accent-text`), where §9 of the style guide writes them without the prefix (`--surface`). Use the site's names.
-- Use no gradients, no shadows and no second brand colour. Small accent-coloured text uses `--color-accent-text`. Text on an accent fill uses `--color-on-accent`, never white.
+- Don't hardcode colour values. Use the tokens in `src/styles/tokens.css`. The warehouse demo gets a copy of that file on every `npm run dev`/`build` (`scripts/sync-demo-tokens.mjs`); never edit `public/warehouse-demo/tokens.css` by hand. The site prefixes colour tokens with `--color-` (`--color-surface`, `--color-accent-text`), where §9 of the style guide writes them without the prefix (`--surface`). Use the site's names.
+- No second brand colour. Gradients and shadows only on buttons (the tactile key style in `src/styles/texture.css`; style guide §4); never on cards, panels or images. Small accent-coloured text uses `--color-accent-text`. Text on an accent fill uses `--color-on-accent`, never white.
 - Write the name in lowercase as `packsel`, with the ™ on the logo and on the first mention per page only. Use `<Brand tm />` for that mention and `<Brand />` after it.
 - Never invent metrics, customer names, testimonials or case studies. Where real copy is missing, use `<p class="todo">TODO: …</p>`.

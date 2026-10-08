@@ -69,6 +69,20 @@
 
   --tracking-kicker: 0.12em;
 
+  /* Tactile controls. Buttons are the one place gradients and shadows are allowed:
+     they read as physical keys (lit top edge, solid skirt below, press-down on click).
+     Surfaces still separate by tone steps and 1px borders. */
+  --color-accent-lit:      #F2804F; /* top of the orange key */
+  --color-accent-deep:     #A8441B; /* skirt under the orange key */
+  --key-cap-top:           #FFFFFF;
+  --key-cap-bottom:        #EDE8DF;
+  --key-skirt:             #CFC6B5;
+  --key-highlight:         rgba(255, 255, 255, 0.55);
+  --key-cast:              rgba(20, 22, 26, 0.28);
+  --key-travel:            3px;
+  --grain-opacity:         0.035;
+  --dot-grid:              rgba(131, 118, 95, 0.22);
+
   /* Layout */
   --measure:        68ch;
   --container-max:  72rem;
@@ -87,6 +101,13 @@
     --color-accent-text:     #E8622A;
     --color-home-panel:      #1D2024;
     --color-home-hover:      #262B31;
+    --key-cap-top:           #2B2F35;
+    --key-cap-bottom:        #1F2226;
+    --key-skirt:             #0C0D0F;
+    --key-highlight:         rgba(255, 255, 255, 0.10);
+    --key-cast:              rgba(0, 0, 0, 0.55);
+    --grain-opacity:         0.06;
+    --dot-grid:              rgba(155, 160, 168, 0.18);
   }
 }
 
