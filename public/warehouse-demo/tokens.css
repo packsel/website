@@ -1,0 +1,89 @@
+/* packsel design tokens. Every value the UI uses comes from here.
+   Dark mode works by redefining these properties on :root. No component CSS is duplicated. */
+
+:root {
+  color-scheme: light dark;
+
+  /* Color: light */
+  --color-surface:         #F7F5F2;
+  --color-surface-raised:  #FFFFFF;
+  --color-surface-sunken:  #EFEAE1;
+  --color-border:          #E1DACB;
+  --color-border-control:  #83765F;
+  --color-ink:             #14161A;
+  --color-ink-secondary:   #5B5F66;
+
+  /* Color: both modes */
+  --color-accent:          #E8622A; /* text only at ≥24px, or bold ≥19px */
+  --color-on-accent:       #14161A; /* labels on accent fills. Never white. */
+  --color-accent-text:     #B94A1E; /* links and small accent text */
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Radius */
+  --radius-sm:   2px;
+  --radius-md:   4px;   /* buttons, inputs */
+  --radius-lg:   8px;   /* panels */
+  --radius-full: 999px;
+
+  /* Borders and focus */
+  --border-width: 1px;
+  --focus-ring-width:  2px;
+  --focus-ring-offset: 2px;
+  --focus-ring: var(--focus-ring-width) solid var(--color-accent);
+
+  /* Type families */
+  --font-sans:      "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-condensed: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono:      "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Type scale. The 19px and 24px steps line up with the accent-text thresholds. */
+  --text-xs:   0.75rem;    /* 12: mono metadata */
+  --text-sm:   0.875rem;   /* 14: kickers, labels */
+  --text-base: 1rem;       /* 16: body */
+  --text-md:   1.1875rem;  /* 19: lead text, bold accent allowed */
+  --text-lg:   1.5rem;     /* 24: h3, accent allowed */
+  --text-xl:   clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);  /* h2 */
+  --text-2xl:  clamp(2.25rem, 1.6rem + 3vw, 3.5rem);     /* h1 */
+
+  --weight-regular:  400;
+  --weight-semibold: 600;
+
+  --leading-tight: 1.15;
+  --leading-snug:  1.35;
+  --leading-body:  1.6;
+
+  --tracking-kicker: 0.12em;
+
+  /* Layout */
+  --measure:        68ch;
+  --container-max:  72rem;
+  --container-pad:  var(--space-4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-surface:         #15171A;
+    --color-surface-raised:  #1D2024;
+    --color-surface-sunken:  #1A1D21;
+    --color-border:          #262B31;
+    --color-border-control:  #727982;
+    --color-ink:             #F2EFE9;
+    --color-ink-secondary:   #9BA0A8;
+    --color-accent-text:     #E8622A;
+  }
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --container-pad: var(--space-6);
+  }
+}
