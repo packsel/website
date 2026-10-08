@@ -4,7 +4,7 @@ const nav = [{href:'/solutions/',label:'Solutions'},{href:'/robots/',label:'Robo
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 ---
 <header class="site-header"><div class="container header-inner">
-<a class="wordmark" href="/" aria-label="packsel home"><Brand tm /><span class="wordmark-kicker">Automation</span></a>
+<a class="wordmark" href="/"><Brand tm /><span class="wordmark-kicker">Automation</span><span class="visually-hidden"> home</span></a>
 <button class="menu-toggle button" aria-expanded="false" aria-controls="primary-nav">Menu <span aria-hidden="true">+</span></button>
 <nav id="primary-nav" aria-label="Primary"><ul role="list" class="nav-list">{nav.map(({href,label}) => <li><a href={href} aria-current={path===href?'page':undefined}>{label}</a></li>)}</ul><a class="button button-primary header-cta" href="mailto:zach@packsel.co?subject=Warehouse%20automation%20with%20packsel">Let’s talk</a></nav>
 </div></header>
