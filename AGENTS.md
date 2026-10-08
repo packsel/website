@@ -8,9 +8,10 @@ This is the marketing site for packsel™, live at https://packsel.co. The brand
   - **IBM Plex Sans** is for headlines, UI and all running text.
   - **IBM Plex Sans Condensed** is only for tracked, uppercase kickers.
   - **IBM Plex Mono** is for figures, telemetry, SKUs, unit IDs, labels and metadata. Never use it for a paragraph, and never set a spec-sheet figure in Sans.
+- **No text smaller than 12px.** That's the guide's smallest size (`eyebrow`, `mono-label`).
 - **Fonts are self-hosted** from `public/fonts/`, and `src/styles/global.css` declares them with `@font-face` and `font-display: swap`. Never load fonts from Google Fonts or any other CDN, and never add a fourth family.
 - **In CSS, use the family tokens:** `var(--font-sans)`, `var(--font-condensed)` or `var(--font-mono)`. Don't type out family names.
-- **Only these weights are installed:** Sans 400 and 600, Condensed 600, Mono 400. Any other weight makes the browser synthesize a fake bold. The style guide also calls for Sans 700 and Mono 500. To use one of those, first add the matching `*-Latin1.woff2` file from IBM's `@ibm/plex-*` npm package to `public/fonts/`, then add an `@font-face` block for it.
+- **Only these weights are installed:** Sans 400, 600 and 700, Condensed 600, Mono 400. Sans 700 is for the wordmark (and the guide's `display` style). The site sets `font-synthesis: none`, so an uninstalled weight falls back to the nearest installed one. The style guide also calls for Mono 500. To use it, first add the matching `*-Latin1.woff2` file from IBM's `@ibm/plex-*` npm package to `public/fonts/`, then add an `@font-face` block for it.
 
 ## Other rules
 
