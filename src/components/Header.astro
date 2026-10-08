@@ -1,78 +1,16 @@
 ---
 import Brand from './Brand.astro';
-
-const nav = [
-  { href: '/how-it-works/', label: 'How it works' },
-  { href: '/warehouse-demo/', label: '3D warehouse demo' },
-  { href: '/contact/', label: 'Contact' },
-];
-
+const nav = [{href:'/solutions/',label:'Solutions'},{href:'/robots/',label:'Our robots'},{href:'/warehouse-demo/',label:'Warehouse demo'},{href:'/savings/',label:'Savings calculator'}];
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 ---
-
-<header class="site-header">
-  <div class="container site-header__inner">
-    <a class="wordmark" href="/">
-      <Brand tm /><span class="visually-hidden"> home</span>
-    </a>
-    <nav aria-label="Primary">
-      <ul role="list" class="nav-list">
-        {nav.map(({ href, label }) => (
-          <li>
-            <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<style>
-  .site-header {
-    border-bottom: var(--border-width) solid var(--color-border);
-    background: var(--color-surface);
-  }
-
-  .site-header__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2) var(--space-5);
-    padding-block: var(--space-3);
-  }
-
-  .wordmark {
-    font-size: var(--text-lg);
-    font-weight: var(--weight-semibold);
-    letter-spacing: -0.02em;
-    line-height: 1;
-    color: var(--color-ink);
-    text-decoration: none;
-    padding-block: var(--space-2);
-  }
-
-  .nav-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1) var(--space-5);
-  }
-
-  .nav-list a {
-    display: inline-block;
-    padding-block: var(--space-2);
-    color: var(--color-ink);
-    text-decoration: none;
-  }
-
-  .nav-list a:hover,
-  .nav-list a[aria-current='page'] {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.35em;
-  }
-
-  .nav-list a[aria-current='page'] {
-    text-decoration-color: var(--color-accent);
-  }
-</style>
+<header class="site-header"><div class="container header-inner">
+<a class="wordmark" href="/" aria-label="packsel home"><Brand tm /><span class="wordmark-kicker">Automation</span></a>
+<button class="menu-toggle button" aria-expanded="false" aria-controls="primary-nav">Menu <span aria-hidden="true">+</span></button>
+<nav id="primary-nav" aria-label="Primary"><ul role="list" class="nav-list">{nav.map(({href,label}) => <li><a href={href} aria-current={path===href?'page':undefined}>{label}</a></li>)}</ul><a class="button button-primary header-cta" href="mailto:zach@packsel.co?subject=Warehouse%20automation%20with%20packsel">Let’s talk <span aria-hidden="true">↗</span></a></nav>
+</div></header>
+<script>
+const toggle=document.querySelector<HTMLButtonElement>('.menu-toggle');
+const nav=document.querySelector<HTMLElement>('#primary-nav');
+toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav?.classList.toggle('is-open',open);});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&toggle?.getAttribute('aria-expanded')==='true'){toggle.setAttribute('aria-expanded','false');nav?.classList.remove('is-open');toggle.focus();}});
+</script>
