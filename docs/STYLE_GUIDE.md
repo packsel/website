@@ -57,30 +57,32 @@ tracking belongs to the kicker only.
 ## 2. Colour
 
 One signal colour. `accent` is the rust-orange of a warehouse safety marking, an AMR
-beacon, and the `packsel.co` link the brand grew from.
+beacon, and the `packsel.co` link the brand grew from. It sits on cool blue-grey
+neutrals (October 2026; they replaced the original warm, paper-toned neutrals).
 
 ### Tokens
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `surface` | `#F7F5F2` | `#15171A` | Page and app background |
+| `surface` | `#E9EEF0` | `#15171A` | Page and app background: a cool blue-grey, the warehouse demo's stage |
 | `surface-raised` | `#FFFFFF` | `#1D2024` | Cards, panels, anything above the page |
-| `surface-sunken` | `#EFEAE1` | `#1A1D21` | Wells, inset fields, table row stripes |
-| `border` | `#E1DACB` | `#262B31` | Hairline dividers, card edges — decorative only |
-| `border-control` | `#83765F` | `#727982` | Input, button and toggle outlines |
-| `ink` | `#14161A` | `#F2EFE9` | Primary text and headings |
-| `ink-secondary` | `#5B5F66` | `#9BA0A8` | Secondary text, captions, metadata, labels |
+| `surface-sunken` | `#DDE4E8` | `#1A1D21` | Wells, inset fields, table row stripes |
+| `border` | `#D3DCE0` | `#262B31` | Hairline dividers, card edges — decorative only |
+| `border-control` | `#6B7B85` | `#727982` | Input and toggle outlines |
+| `ink` | `#14161A` | `#EEF1F3` | Primary text and headings |
+| `ink-secondary` | `#4F5B64` | `#9BA0A8` | Secondary text, captions, metadata, labels |
 | `accent` | `#E8622A` | `#E8622A` | Icons, active states, chart marks, focus rings, large text |
-| `accent-text` | `#B94A1E` | `#E8622A` | Links and small accent-coloured body text |
+| `accent-text` | `#AD4318` | `#E8622A` | Links and small accent-coloured body text |
 | `on-accent` | `#14161A` | `#14161A` | Text and icons on a solid accent fill |
 
 ### Rules
 
-- **Never introduce a second brand hue.** No blue, no green. `accent` is spent, not
-  decorated. The only orange gradient is the face of a primary key (`accent-lit` →
-  `accent`), described in §4.
+- **Never introduce a second brand hue.** The neutrals are cool and slightly blue; that
+  is the only blue. No saturated blue, no green. `accent` is spent, not decorated. The
+  only orange gradient is the dish of a primary key (`accent-deep` → `accent-lit`), §4.
 - `accent` as text is only legal at **24px+, or bold 19px+**. On a light surface it reads
-  3.1:1 — below the 4.5:1 small-text floor. For a link or a small line of accent copy, use
+  2.9:1 on `surface` — below the 4.5:1 small-text floor, and below 3:1, so large orange
+  text on the blue page uses `accent-text` too. For a link or a small line of accent copy, use
   `accent-text`.
 - On a solid `accent` fill, label in `on-accent` (dark ink), **not white**. White on accent
   is 3.4:1 and fails.
@@ -95,12 +97,14 @@ Measured, WCAG 2 ratios. Re-run these if any value changes.
 
 | Pair | Light | Dark | Floor | Pass |
 |---|---|---|---|---|
-| `ink` on `surface` | 16.6:1 | 15.7:1 | 4.5 | ✅ |
-| `ink-secondary` on `surface` | 5.9:1 | 6.8:1 | 4.5 | ✅ |
-| `accent-text` on `surface` | 4.8:1 | 5.3:1 | 4.5 | ✅ |
+| `ink` on `surface` | 15.5:1 | 15.8:1 | 4.5 | ✅ |
+| `ink-secondary` on `surface` | 6.0:1 | 6.8:1 | 4.5 | ✅ |
+| `accent-text` on `surface` | 5.0:1 | 5.3:1 | 4.5 | ✅ |
+| `accent-text` on `surface-sunken` | 4.5:1 | 5.0:1 | 4.5 | ✅ |
 | `on-accent` on `accent` | 5.4:1 | 5.4:1 | 4.5 | ✅ |
-| `accent` on `surface` | 3.1:1 | 5.3:1 | 3.0 (non-text / 24px+) | ✅ |
-| `border-control` on `surface` | 4.1:1 | 4.1:1 | 3.0 (control border) | ✅ |
+| `on-accent` on `accent-deep` (darkest part of the orange key) | 4.6:1 | 4.6:1 | 4.5 | ✅ |
+| `accent` on `surface` | 2.9:1 | 5.3:1 | 3.0 (non-text / 24px+) | ⚠️ icons and marks only in light; use `accent-text` for large text |
+| `border-control` on `surface` | 3.7:1 | 4.1:1 | 3.0 (control border) | ✅ |
 | ~~white on `accent`~~ | 3.4:1 | — | 4.5 | ❌ **don't** |
 
 ---
@@ -165,28 +169,31 @@ card) so the corners stay concentric.
 surface step (`surface` → `surface-raised`) or a `border`, never a drop shadow.
 Buttons are the exception: they are drawn as physical keys on a control panel.
 
-### Tactile keys
+### Neumorphic keys
 
-| Part | Primary (orange) | Secondary (cap) |
+Buttons are concave neumorphic keys: soft, moulded into the surface rather than stuck on it.
+
+| Part | Secondary | Primary (orange) |
 |---|---|---|
-| Face | Gradient `accent-lit` → `accent` | Gradient `key-cap-top` → `key-cap-bottom` |
-| Edge | 1px `accent-deep` | 1px `key-skirt` |
-| Skirt | Solid 3px (`key-travel`) of `accent-deep` below the face | Solid 3px of `key-skirt` |
-| Lit edge | 1px inner highlight on the top edge | `key-highlight` |
-| Cast | One soft shadow under the skirt, `key-cast` | Same |
-| Hover | Rises 1px, skirt grows 1px | Same |
-| Press | Moves down the full `key-travel`; skirt disappears; inner shadow | Same |
+| Colour | The colour of whatever it sits on (`--neu-bg`: `surface` on the page, `surface-raised` on white panels) | `accent` |
+| Face | A dish: gradient at 145°, darker top-left → lighter bottom-right (`neu-tint-*`) | `accent-deep` → `accent-lit` |
+| Lift | Two soft outer shadows: dark bottom-right (`neu-shadow-dark`), light top-left (`neu-shadow-light`), `neu-distance` 5px, `neu-blur` 12px | Same |
+| Edge | 1px rim, slightly lighter than the face (`neu-edge-amount`) | 1px rim, `accent` mixed with 25% white |
+| Hover | Shadows reach 2px further | Same, slightly richer |
+| Press | Shadows move inside (inset); the key looks pushed into the surface | Same, in orange tones |
 
-Labels on the orange key are `on-accent` (dark ink), as everywhere. Keys are pill-shaped
-(`radius-full`). Text links are not keys: they are `accent-text` with a tape underline
-and an arrow that moves on hover. Segmented controls (the demo's view and speed
-switches) sit in an inset well, and the active segment is a small orange key.
+Concave, not convex: the face always darkens toward the top-left. Labels on the orange
+key are `on-accent`. Keys are pill-shaped (`radius-full`). A key on a white panel must
+set `--neu-bg` to that panel's colour, or its shading won't match. Text links are not
+keys: they are `accent-text` with a tape underline and an arrow that moves on hover.
+Segmented controls (the demo's view and speed switches) are a pressed-in well with the
+active segment as a small orange key.
 
 ### Texture and character
 
 packsel should feel like a warehouse floor, not a showroom. Five motifs, used sparingly:
 
-- **Grain.** A faint paper grain over the whole page (`grain-opacity`, ~3.5%). Never
+- **Grain.** A faint grain over the whole page (`grain-opacity`, ~3%). Never
   stronger, never on top of photography alone.
 - **Hazard tape.** Diagonal `accent` / `on-accent` stripes, 10px each. Only as a thin edge
   (5–8px): the top of the header, the top of the contact band, the head of a datasheet.
@@ -291,15 +298,15 @@ Tokens live in one file and nothing hardcodes a hex.
 
 ```css
 :root {
-  --surface: #F7F5F2;
+  --surface: #E9EEF0;
   --surface-raised: #FFFFFF;
-  --surface-sunken: #EFEAE1;
-  --border: #E1DACB;
-  --border-control: #83765F;
+  --surface-sunken: #DDE4E8;
+  --border: #D3DCE0;
+  --border-control: #6B7B85;
   --ink: #14161A;
-  --ink-secondary: #5B5F66;
+  --ink-secondary: #4F5B64;
   --accent: #E8622A;
-  --accent-text: #B94A1E;
+  --accent-text: #AD4318;
   --on-accent: #14161A;
 
   --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
@@ -320,7 +327,7 @@ Tokens live in one file and nothing hardcodes a hex.
     --surface-sunken: #1A1D21;
     --border: #262B31;
     --border-control: #727982;
-    --ink: #F2EFE9;
+    --ink: #EEF1F3;
     --ink-secondary: #9BA0A8;
     --accent-text: #E8622A;
   }

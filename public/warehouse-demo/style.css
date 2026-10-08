@@ -11,13 +11,13 @@
 
 /* ---------- Demo-only tokens ---------- */
 :root {
-  --demo-stage: #EFEDEA;          /* matches the 3D scene background in scene.js */
-  --demo-map-floor: #F4F2EE;
-  --demo-map-lane: #DDD6CA;
-  --demo-map-rack: #A89F8E;
-  --demo-map-worker: #83765F;
-  --demo-map-station: #CFC6B5;
-  --demo-map-idle: #B3ADA3;
+  --demo-stage: #E9EEF0;          /* the 3D scene background in scene.js; also the site surface */
+  --demo-map-floor: #EEF3F5;
+  --demo-map-lane: #D1DDE1;
+  --demo-map-rack: #9EB0B8;
+  --demo-map-worker: #6F858D;
+  --demo-map-station: #BBCACE;
+  --demo-map-idle: #A4ADB3;
   --demo-map-picking: #E8622A;
   --demo-map-moving: #14161A;
   --stage-ink: #14161A;           /* text drawn straight on the 3D stage, which stays light in both themes */
@@ -46,33 +46,35 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-family: var(--font-condensed); font-weight: 600; font-size: 12px; letter-spacing: var(--tracking-kicker); text-transform: uppercase; color: var(--color-ink-secondary);
 }
 
-/* ---------- Tactile keys (same recipe as the marketing site) ---------- */
+/* ---------- Neumorphic concave keys (same recipe as the marketing site) ---------- */
 .button {
+  --face-dark: color-mix(in srgb, var(--neu-bg), var(--neu-tint-dark) var(--neu-tint-dark-amount));
+  --face-light: color-mix(in srgb, var(--neu-bg), var(--neu-tint-light) var(--neu-tint-light-amount));
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 44px; padding: 10px 20px;
-  border-radius: var(--radius-full); border: 1px solid var(--key-skirt);
-  background: linear-gradient(180deg, var(--key-cap-top), var(--key-cap-bottom));
+  border-radius: var(--radius-full); border: 1px solid color-mix(in srgb, var(--neu-bg), var(--neu-tint-light) var(--neu-edge-amount));
+  background: linear-gradient(145deg, var(--face-dark), var(--face-light));
   color: var(--color-ink); font-size: 14px; font-weight: 600; text-decoration: none;
-  box-shadow: inset 0 1px 0 var(--key-highlight), 0 var(--key-travel) 0 var(--key-skirt), 0 calc(var(--key-travel) + 6px) 12px -6px var(--key-cast);
-  transition: transform 90ms ease-out, box-shadow 90ms ease-out, filter 160ms ease;
+  box-shadow: var(--neu-distance) var(--neu-distance) var(--neu-blur) var(--neu-shadow-dark), calc(var(--neu-distance) * -1) calc(var(--neu-distance) * -1) var(--neu-blur) var(--neu-shadow-light);
+  transition: box-shadow 140ms ease-out, filter 160ms ease;
 }
 .button.dark {
-  border-color: var(--color-accent-deep);
-  background: linear-gradient(180deg, var(--color-accent-lit), var(--color-accent) 62%);
+  --face-dark: var(--color-accent-deep);
+  --face-light: var(--color-accent-lit);
+  border-color: color-mix(in srgb, var(--color-accent), #FFFFFF 25%);
   color: var(--color-on-accent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(0, 0, 0, 0.12), 0 var(--key-travel) 0 var(--color-accent-deep), 0 calc(var(--key-travel) + 6px) 14px -6px var(--key-cast);
 }
-.button:active { transform: translateY(var(--key-travel)); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.16); }
-.button.dark:active { box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.22); }
+.button:active { box-shadow: inset 3px 3px 7px var(--neu-shadow-dark), inset -3px -3px 7px var(--neu-shadow-light); }
+.button.dark:active { box-shadow: inset 3px 3px 7px rgba(120, 40, 10, 0.45), inset -3px -3px 7px rgba(255, 190, 150, 0.5); }
 @media (hover: hover) and (pointer: fine) {
-  .button:hover { transform: translateY(-1px); filter: brightness(1.03); }
+  .button:hover { box-shadow: 7px 7px 16px var(--neu-shadow-dark), -7px -7px 16px var(--neu-shadow-light); }
 }
 
 /* ---------- Header ---------- */
 header {
   position: relative; height: var(--header-h); padding: 5px 32px 0;
   display: flex; align-items: center; gap: 24px;
-  background: var(--color-surface-raised); border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface); border-bottom: 1px solid var(--color-border);
 }
 header::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--tape); }
 .brand { display: flex; align-items: flex-start; text-decoration: none; color: var(--color-ink); font-size: 24px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
@@ -109,8 +111,9 @@ header > .button { margin-left: 0; }
 .bottom-bar { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 14px; white-space: nowrap; }
 .view-controls, .time-controls {
   display: flex; align-items: center; gap: 4px; padding: 5px;
-  border-radius: var(--radius-full); border: 1px solid var(--color-border);
-  background: var(--color-surface-sunken); box-shadow: inset 0 1px 3px rgba(20, 22, 26, 0.14);
+  border-radius: var(--radius-full); border: 1px solid transparent;
+  background: var(--color-surface);
+  box-shadow: inset 3px 3px 7px var(--neu-shadow-dark), inset -3px -3px 7px var(--neu-shadow-light);
 }
 .bottom-bar button {
   display: flex; align-items: center; gap: 7px; min-height: 40px; padding: 8px 14px;
@@ -119,11 +122,12 @@ header > .button { margin-left: 0; }
 }
 .bottom-bar .speed, #pause { font-family: var(--font-mono); }
 .bottom-bar button.active {
-  border-color: var(--color-accent-deep); color: var(--color-on-accent); font-weight: 600;
-  background: linear-gradient(180deg, var(--color-accent-lit), var(--color-accent) 62%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 0 var(--color-accent-deep);
+  color: var(--color-on-accent); font-weight: 600;
+  border-color: color-mix(in srgb, var(--color-accent), #FFFFFF 25%);
+  background: linear-gradient(145deg, var(--color-accent-deep), var(--color-accent-lit));
+  box-shadow: 3px 3px 7px var(--neu-shadow-dark), -3px -3px 7px var(--neu-shadow-light);
 }
-.bottom-bar button:active { transform: translateY(2px); }
+.bottom-bar button:active { transform: none; }
 @media (hover: hover) and (pointer: fine) {
   .bottom-bar button:not(.active):hover { background: var(--color-surface-raised); }
 }
@@ -137,12 +141,15 @@ header > .button { margin-left: 0; }
 .label-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-accent); }
 
 /* ---------- Metrics footer ---------- */
-footer { height: var(--footer-h); display: flex; align-items: center; padding: 0 32px; background: var(--color-surface-raised); border-top: 1px solid var(--color-border); }
+footer { height: var(--footer-h); display: flex; align-items: center; padding: 0 32px; background: var(--color-surface); border-top: 1px solid var(--color-border); }
 footer > div { flex: 1; display: flex; flex-direction: column; gap: 6px; padding-left: 24px; border-right: 1px solid var(--color-border); }
 footer > div:first-child { padding-left: 0; }
 .metric-value { font-family: var(--font-mono); font-size: 26px; line-height: 1; color: var(--color-ink); }
 footer > div > span:last-child { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--color-ink-secondary); }
 footer .simulation-note { flex: 0.85; border: 0; font-size: 12px; line-height: 1.6; color: var(--color-ink-secondary); }
+
+/* Keys on white panels take the panel colour. */
+.detail, .story, dialog { --neu-bg: var(--color-surface-raised); }
 
 /* ---------- Robot / worker detail panel ---------- */
 .detail {

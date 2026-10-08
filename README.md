@@ -30,7 +30,7 @@ npm run dev      # opens at http://localhost:4321
 The full brand guide is [`docs/STYLE_GUIDE.md`](docs/STYLE_GUIDE.md). The short version:
 
 - Use IBM Plex only: Sans, Sans Condensed and Mono. Fonts are self-hosted, never loaded from Google Fonts.
-- Orange is the only brand colour. Gradients and shadows are only for buttons, which are drawn as physical keys.
+- Orange is the only brand colour. Gradients and shadows are only for buttons, which are soft, concave neumorphic keys. The page background is a cool blue-grey.
 - Write the name as lowercase **packsel**. The ™ goes on the logo and on the first mention on each page, not after that.
 - Only publish real numbers, customers and quotes. If you don't have the real thing yet, leave a `TODO`.
 
