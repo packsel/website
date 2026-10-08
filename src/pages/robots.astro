@@ -3,34 +3,338 @@ import Base from '../layouts/Base.astro';
 import Brand from '../components/Brand.astro';
 import ContactBand from '../components/ContactBand.astro';
 import Video from '../components/Video.astro';
-const uses=[
- {n:'01',title:'Zone picking',body:'Your people pick. Robots travel between zones, collecting items for separate orders before heading to packing.',items:['Plan zones around locations and pick density.','Guide picks with SKU, quantity, location, and barcode confirmation.','Keep orders in separate bins, with client separation rules.']},
- {n:'02',title:'Order transport',body:'Move completed picks between stations without pulling associates away from their work area.',items:['Define pickup, packing, and return locations.','Choose shelves and totes for your order mix.','Set clear loading, unloading, and exception handoffs.']},
- {n:'03',title:'Material movement',body:'Put repeat trips between workstations on a robot’s task list. Start with a route that has a clear purpose.',items:['Move materials between defined workstations.','Assess replenishment and return transport.','Match the carrying configuration to the load.']}
+
+// Callout points are percentages of the transparent robot cut-out (800 × 1200).
+const parts = [
+  { n: 1, name: 'Touchscreen', detail: 'Pick and route prompts', x: 40, y: 10, side: 'left', len: 56 },
+  { n: 2, name: 'Handles', detail: 'For moving it by hand', x: 70, y: 18.5, side: 'right', len: 40 },
+  { n: 3, name: 'Mast', detail: 'Carries screen and handles', x: 46, y: 46, side: 'left', len: 70 },
+  { n: 4, name: 'Load platform', detail: 'Up to 300 kg', x: 83, y: 76.5, side: 'right', len: 28 },
+  { n: 5, name: 'Status lights', detail: 'Front and rear', x: 18, y: 86, side: 'left', len: 26 },
+  { n: 6, name: 'Drive base', detail: 'Up to 1.2 m/s', x: 76, y: 90, side: 'right', len: 36 },
 ];
-const specs=[['Maximum payload','300 kg / 661 lb'],['Base dimensions (L × W × H)','835 × 500 × 1,350 mm'],['Maximum travel speed','1.2 m/s'],['Runtime at full load','8 hours'],['Runtime without load','12 hours'],['Charge time, 0–90%','2 hours'],['Navigation','VSLAM + LiDAR SLAM']];
+
+const jobs = [
+  { n: '01', title: 'Zone picking', body: 'Your people stay in their zones. A robot visits each zone to collect items for separate orders, then heads to packing.', items: ['Zones planned around locations and pick density', 'SKU, quantity, location and barcode confirmation on screen', 'One bin per order, with client separation rules'], diagram: 'zones' },
+  { n: '02', title: 'Order transport', body: 'Completed picks travel between stations on their own, so associates don’t leave their work area to carry them.', items: ['Pickup, packing and return points defined with you', 'Shelves and totes matched to your order mix', 'Clear loading, unloading and exception handoffs'], diagram: 'shuttle' },
+  { n: '03', title: 'Material movement', body: 'Repeat trips between workstations go on a robot’s task list. Start with one route that has a clear purpose.', items: ['Moves between defined workstations', 'Replenishment and return runs assessed', 'Carrying configuration matched to the load'], diagram: 'loop' },
+];
+
+const specs = [
+  ['Maximum payload', '300 kg / 661 lb'],
+  ['Base (L × W × H)', '835 × 500 × 1,350 mm'],
+  ['Maximum travel speed', '1.2 m/s'],
+  ['Runtime, full load', '8 h'],
+  ['Runtime, no load', '12 h'],
+  ['Charge time, 0–90%', '2 h'],
+  ['Navigation', 'VSLAM + LiDAR SLAM'],
+];
+
+const checks = [
+  { title: 'Floor and traffic', body: 'Aisle widths, crossings, floor conditions and pedestrian routes.' },
+  { title: 'Orders and inventory', body: 'Pick density, item sizes, client rules and peak demand.' },
+  { title: 'Systems and connectivity', body: 'WMS API access, location data, scanners and Wi-Fi coverage.' },
+];
 ---
-<Base title="Robots" description="What packsel robots do in a 3PL warehouse (zone picking, order transport, material movement) and the hardware and specifications behind them.">
-<div class="interior">
-<section class="page-hero"><p class="page-eyebrow">Robots for 3PL warehouses.</p><h1>Move the work.<br />Keep people picking.</h1><p class="page-deck"><Brand tm /> leases mobile robots for the trips and handoffs<br />that fill your warehouse day.</p><div class="page-actions"><a class="button button-primary" href="/contact/">Let’s talk</a><a class="page-link" href="/warehouse-demo/">Watch them in the demo</a></div><nav class="jump-links" aria-label="On this page"><a href="#uses">What they do</a><a href="#hardware">The hardware</a><a href="#specs">Specifications</a></nav></section>
-<div class="content-wrap"><figure class="media-frame" data-reveal><img src="/images/warehouse-robots.webp" srcset="/images/warehouse-robots-800.webp 800w, /images/warehouse-robots.webp 1440w" sizes="(max-width:1264px) calc(100vw - 64px), 1200px" width="1440" height="960" alt="Shelf-equipped packsel robots transporting cartons and totes through a warehouse aisle" fetchpriority="high" /><figcaption>Product visualization. Final configurations and workflows are defined with your team.</figcaption></figure></div>
+<Base title="Robots" description="What packsel robots do in a 3PL warehouse (zone picking, order transport, material movement), the two builds, and the reference specifications.">
+<div class="interior rb">
 
-<section id="uses" class="page-section content-wrap"><div class="section-intro" data-reveal><p class="page-eyebrow">What they do.</p><h2>Three ways to<br />take travel off the task list.</h2></div><div class="feature-grid">{uses.map(s=><article class="feature-card hover-surface" data-reveal><span class="card-number">{s.n}</span><h3>{s.title}</h3><p>{s.body}</p><ul class="simple-list">{s.items.map(item=><li>{item}</li>)}</ul></article>)}</div></section>
+  <!-- 1. Spec plate -->
+  <section class="rb-hero content-wrap">
+    <div class="rb-hero-copy">
+      <span class="asset-tag">Robots · 3PL warehouses</span>
+      <h1>Move the work.<br />Keep people picking.</h1>
+      <p class="rb-deck"><Brand tm /> leases mobile robots for the trips and handoffs that fill your warehouse day.</p>
+      <div class="rb-actions"><a class="button button-primary" href="/contact/">Let’s talk</a><a class="page-link" href="/warehouse-demo/">Watch them in the demo</a></div>
+      <dl class="rb-readout">
+        <div><dt>Payload</dt><dd>300 kg</dd></div>
+        <div><dt>Speed</dt><dd>1.2 m/s</dd></div>
+        <div><dt>Runtime*</dt><dd>8 h</dd></div>
+      </dl>
+      <p class="rb-footnote">*At full load. Varies with route and conditions. <a href="#specs">All specifications</a></p>
+    </div>
 
-<section id="hardware" class="neutral-band page-section"><div class="content-wrap split-feature"><figure class="product-surface" data-reveal><img src="/images/transport-robot.webp" width="800" height="1200" alt="packsel platform robot with a compact mobile base, mast, and touchscreen" loading="lazy" /><figcaption>Product visualization · Platform configuration</figcaption></figure><div class="feature-copy" data-reveal><p class="page-eyebrow">The hardware: platform.</p><h2>A compact base.<br />A useful daily role.</h2><p>A loading platform and an onboard touchscreen for point-to-point material transport.</p><div class="spec-strip"><div><strong>300 kg</strong><span>Maximum payload</span></div><div><strong>1.2 m/s</strong><span>Maximum speed</span></div><div><strong>8 h</strong><span>Full-load runtime*</span></div></div><p class="note">*Runtime varies with load, route, and operating conditions. <a href="#specs">Full specifications</a></p></div></div></section>
+    <figure class="rb-plate dot-grid">
+      <span class="rb-plate-head"><span>AMR-STD</span><span>Platform build</span></span>
+      <div class="rb-robot">
+        <img src="/images/transport-robot.webp" width="800" height="1200" alt="packsel platform robot: a drive base with a load platform, a tall mast, handles and a touchscreen" fetchpriority="high" />
+        <div class="rb-pins" aria-hidden="true">
+          {parts.map(p => (
+            <span class={`rb-pin rb-pin--${p.side}`} style={`--x:${p.x}%;--y:${p.y}%;--len:${p.len}px`}>
+              <span class="rb-dot">{p.n}</span>
+              <span class="rb-label"><strong>{p.name}</strong><span>{p.detail}</span></span>
+            </span>
+          ))}
+        </div>
+      </div>
+      <ol class="rb-legend" aria-label="Parts of the robot">
+        {parts.map(p => <li><span class="rb-dot" aria-hidden="true">{p.n}</span><span><strong>{p.name}</strong> <span>{p.detail}</span></span></li>)}
+      </ol>
+      <figcaption>Product visualization. Final configuration varies.</figcaption>
+    </figure>
+  </section>
 
-<section class="content-wrap page-section"><div class="section-intro" data-reveal><p class="page-eyebrow">The hardware: shelves.</p><h2>More on board.<br />Less back and forth.</h2><p>Multi-level shelves keep products and totes organized between workstations. A picking configuration pairs separate order bins with a scan-guided workflow.</p></div><figure class="media-frame" data-reveal><img src="/images/factory-shelf-robot.webp" srcset="/images/factory-shelf-robot-800.webp 800w, /images/factory-shelf-robot.webp 1600w" sizes="(max-width:1264px) calc(100vw - 64px), 1200px" width="1600" height="900" alt="packsel shelf robot carrying cartons and totes on a factory floor" loading="lazy" /><figcaption>Illustrative shelf configuration. Final hardware may differ.</figcaption></figure><div class="page-actions"><a class="page-link" href="/warehouse-demo/">Try zone picking in the demo</a></div></section>
+  <!-- 2. Job board -->
+  <section id="uses" class="rb-section content-wrap">
+    <header class="rb-head">
+      <span class="asset-tag">What they do</span>
+      <h2>Three jobs on the floor.</h2>
+      <p>Start with the trip that costs your team the most walking.</p>
+    </header>
+    <ol class="job-board">
+      {jobs.map(j => (
+        <li class="job">
+          <span class="job-no">Job {j.n}</span>
+          <div class="job-copy"><h3>{j.title}</h3><p>{j.body}</p></div>
+          <figure class="job-route dot-grid" aria-hidden="true">
+            {j.diagram === 'zones' && (
+              <svg viewBox="0 0 280 150">
+                <g class="r-box">{[0,1,2,3].map(i => <rect x={18 + i*62} y="18" width="46" height="34" rx="6" />)}</g>
+                <g class="r-text">{[0,1,2,3].map(i => <text x={41 + i*62} y="40">Z{i+1}</text>)}</g>
+                <rect class="r-box r-pack" x="196" y="104" width="68" height="32" rx="6" /><text class="r-text" x="230" y="125">PACK</text>
+                <path class="r-route" d="M30 128 H70 V64 M70 64 H101 V64 H163 V64 H225 V96" />
+                <g class="r-stop">{[0,1,2,3].map(i => <circle cx={41 + i*62} cy="64" r="4" />)}</g>
+                <circle class="r-bot" cx="30" cy="128" r="7" />
+              </svg>
+            )}
+            {j.diagram === 'shuttle' && (
+              <svg viewBox="0 0 280 150">
+                <rect class="r-box" x="16" y="52" width="70" height="46" rx="6" /><text class="r-text" x="51" y="80">PICK</text>
+                <rect class="r-box r-pack" x="194" y="52" width="70" height="46" rx="6" /><text class="r-text" x="229" y="80">PACK</text>
+                <path class="r-route" d="M92 66 H186" /><path class="r-route r-return" d="M186 86 H92" />
+                <path class="r-arrow" d="M180 60 l8 6 -8 6" /><path class="r-arrow" d="M98 80 l-8 6 8 6" />
+                <circle class="r-bot" cx="140" cy="66" r="7" />
+              </svg>
+            )}
+            {j.diagram === 'loop' && (
+              <svg viewBox="0 0 280 150">
+                <rect class="r-box" x="20" y="20" width="62" height="34" rx="6" /><text class="r-text" x="51" y="42">WS-A</text>
+                <rect class="r-box" x="198" y="20" width="62" height="34" rx="6" /><text class="r-text" x="229" y="42">WS-B</text>
+                <rect class="r-box r-pack" x="109" y="104" width="62" height="34" rx="6" /><text class="r-text" x="140" y="126">WS-C</text>
+                <path class="r-route" d="M86 37 H194 M229 58 L172 108 M108 121 L51 58" />
+                <path class="r-arrow" d="M188 31 l8 6 -8 6" />
+                <circle class="r-bot" cx="200" cy="83" r="7" />
+              </svg>
+            )}
+          </figure>
+          <ul class="job-checks">{j.items.map(item => <li>{item}</li>)}</ul>
+        </li>
+      ))}
+    </ol>
+  </section>
 
-<section id="specs" class="neutral-band page-section"><div class="content-wrap split-feature"><div class="feature-copy" data-reveal><p class="page-eyebrow">Specifications.</p><h2>Know the platform.</h2><p>Reference specifications for standard transport. Payload dimensions and accessories affect the clearance your floor needs.</p><a class="page-link" href="/how-it-works/">How we size a fleet for your floor</a></div><div class="spec-panel" data-reveal><table class="spec-table"><caption class="visually-hidden">Standard transport platform reference specifications</caption><tbody>{specs.map(([label,value])=><tr><th scope="row">{label}</th><td>{value}</td></tr>)}</tbody></table><p class="note">Reference: supplied product specification, December 2025. Ratings are not a site-specific performance guarantee. Final specifications are confirmed in your proposal.</p></div></div></section>
+  <!-- 3. Two builds -->
+  <section id="hardware" class="rb-section rb-builds-band">
+    <div class="content-wrap">
+      <header class="rb-head">
+        <span class="asset-tag">The hardware</span>
+        <h2>One base. Two builds.</h2>
+        <p>The same drive base, set up for the work your floor needs.</p>
+      </header>
+      <div class="build-grid">
+        <article class="build">
+          <div class="build-media dot-grid build-media--cutout"><img src="/images/transport-robot.webp" width="800" height="1200" alt="Close-up of the platform build’s drive base and load platform" loading="lazy" /></div>
+          <div class="build-body">
+            <span class="build-code">Build A</span>
+            <h3>Platform</h3>
+            <p>An open loading platform under a mast and touchscreen, for point-to-point moves.</p>
+            <dl class="build-facts">
+              <div><dt>Best for</dt><dd>Order transport, material movement</dd></div>
+              <div><dt>Carries</dt><dd>Up to 300 kg on the platform</dd></div>
+            </dl>
+          </div>
+        </article>
+        <article class="build">
+          <div class="build-media"><img src="/images/factory-shelf-robot-800.webp" srcset="/images/factory-shelf-robot-800.webp 800w, /images/factory-shelf-robot.webp 1600w" sizes="(max-width: 900px) 100vw, 600px" width="800" height="450" alt="packsel shelf build carrying cartons and totes on several shelves" loading="lazy" /></div>
+          <div class="build-body">
+            <span class="build-code">Build B</span>
+            <h3>Shelves</h3>
+            <p>Multi-level shelves keep totes and order bins separate between stops.</p>
+            <dl class="build-facts">
+              <div><dt>Best for</dt><dd>Zone picking, multi-order transport</dd></div>
+              <div><dt>Carries</dt><dd>Totes and order bins, arranged to your requirements</dd></div>
+            </dl>
+            <a class="page-link" href="/warehouse-demo/">Try zone picking in the demo</a>
+          </div>
+        </article>
+      </div>
+      <p class="rb-footnote">Illustrative builds. Final hardware and shelf arrangements are defined with your team.</p>
+    </div>
+  </section>
 
-<section class="content-wrap page-section split-feature"><div class="feature-copy" data-reveal><p class="page-eyebrow">See it move.</p><h2>Made for<br />the daily trip.</h2><p>Watch the platform navigate and carry materials between work areas.</p></div><div data-reveal><Video /></div></section>
-<ContactBand />
+  <!-- 4. Datasheet + fit -->
+  <section id="specs" class="rb-section content-wrap rb-spec-grid">
+    <div class="datasheet">
+      <div class="datasheet-tape hazard-tape" aria-hidden="true"></div>
+      <div class="datasheet-head"><h2>Reference specification</h2><span>Standard transport platform · Rev. Dec 2025</span></div>
+      <dl class="datasheet-rows">
+        {specs.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+      </dl>
+      <p class="datasheet-note">Source: supplied product specification, December 2025. Ratings are not a site-specific performance guarantee; final specifications are confirmed in your proposal.</p>
+    </div>
+    <div class="fit">
+      <span class="asset-tag">Before we propose a fleet</span>
+      <h2>We check your floor first.</h2>
+      <ol class="fit-list">
+        {checks.map((c, i) => <li><span class="fit-no">{String(i + 1).padStart(2, '0')}</span><div><h3>{c.title}</h3><p>{c.body}</p></div></li>)}
+      </ol>
+      <a class="page-link" href="/how-it-works/">How we plan a deployment</a>
+    </div>
+  </section>
+
+  <!-- 5. Lights down -->
+  <section class="ink-band rb-video">
+    <div class="content-wrap rb-video-grid">
+      <div>
+        <span class="asset-tag">See it move</span>
+        <h2>Made for the daily trip.</h2>
+        <p>Watch the platform navigate and carry materials between work areas.</p>
+      </div>
+      <Video />
+    </div>
+  </section>
+
+  <ContactBand />
 </div>
 </Base>
 
 <style>
-  .jump-links { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2) var(--space-5); margin-top: var(--space-6); font-size: var(--text-sm); }
-  .jump-links a { color: var(--color-ink-secondary); padding: var(--space-2) 0; }
-  .jump-links a:hover { color: var(--color-ink); }
-  [id] { scroll-margin-top: var(--space-7); }
+  .rb { --rb-gap: clamp(56px, 8vw, 112px); }
+  .rb h1, .rb h2, .rb h3 { letter-spacing: -0.035em; }
+  .rb .asset-tag { margin-bottom: 20px; }
+  [id] { scroll-margin-top: 96px; }
+
+  /* 1. Spec plate */
+  .rb-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding-block: clamp(40px, 6vw, 88px) var(--rb-gap); }
+  .rb-hero h1 { font-size: clamp(44px, 5.6vw, 76px); line-height: 1.02; letter-spacing: -0.05em; margin: 0; }
+  .rb-deck { font-size: clamp(19px, 1.7vw, 22px); line-height: 1.45; color: var(--color-ink-secondary); margin-top: 24px; max-width: 30ch; }
+  .rb-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 32px; }
+  .rb-readout { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0; margin-top: 40px; border: 1px solid var(--color-border); border-radius: 16px; background: var(--color-surface-raised); width: max-content; max-width: 100%; }
+  .rb-readout div { padding: 14px 22px; border-left: 1px solid var(--color-border); }
+  .rb-readout div:first-child { border-left: 0; }
+  .rb-readout dt { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-secondary); }
+  .rb-readout dd { margin: 4px 0 0; font-family: var(--font-mono); font-size: clamp(20px, 2vw, 26px); color: var(--color-ink); }
+  .rb-footnote { font-size: 13px; color: var(--color-ink-secondary); margin-top: 12px; }
+  .rb-footnote a { color: var(--color-accent-text); }
+
+  .rb-plate { position: relative; margin: 0; border: 1px solid var(--color-border); border-radius: 24px; padding: 64px 24px 48px; overflow: hidden; }
+  .rb-plate-head { position: absolute; top: 18px; left: 22px; right: 22px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-secondary); }
+  .rb-plate figcaption { position: absolute; left: 22px; bottom: 16px; font-size: 12px; color: var(--color-ink-secondary); }
+  .rb-robot { position: relative; width: min(300px, 62%); margin: 0 auto; }
+  .rb-robot img { display: block; width: 100%; height: auto; }
+    .rb-pin { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; }
+  .rb-pin .rb-dot { position: absolute; left: -11px; top: -11px; }
+  .rb-dot { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--color-accent); color: var(--color-on-accent); font-family: var(--font-mono); font-size: 12px; box-shadow: 0 0 0 3px var(--color-surface-raised); z-index: 2; }
+  .rb-legend { list-style: none; margin: 0; padding: 0; position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .rb-label { position: absolute; top: -18px; display: flex; flex-direction: column; white-space: nowrap; padding: 4px 9px; border-radius: 8px; background: var(--color-surface-raised); border: 1px solid var(--color-border); z-index: 1; }
+  .rb-label strong { font-size: 13px; font-weight: 600; color: var(--color-ink); line-height: 1.25; }
+  .rb-label span { font-family: var(--font-mono); font-size: 12px; color: var(--color-ink-secondary); line-height: 1.3; }
+  .rb-pin::before { content: ""; position: absolute; top: 0; height: 1px; width: var(--len); background: var(--color-ink); opacity: .55; }
+  .rb-pin--left::before { right: 0; }
+  .rb-pin--right::before { left: 0; }
+  .rb-pin--left .rb-label { right: var(--len); }
+  .rb-pin--right .rb-label { left: var(--len); }
+
+  /* Section heads */
+  .rb-section { padding-block: var(--rb-gap); }
+  .rb-head { max-width: 640px; margin-bottom: clamp(32px, 4vw, 56px); }
+  .rb-head h2 { font-size: clamp(34px, 4vw, 54px); line-height: 1.05; margin: 0; }
+  .rb-head p { font-size: 19px; color: var(--color-ink-secondary); margin-top: 16px; }
+
+  /* 2. Job board */
+  .job-board { list-style: none; margin: 0; padding: 0; border-bottom: 2px dashed color-mix(in srgb, var(--color-accent) 55%, transparent); }
+  .job { display: grid; grid-template-columns: 88px minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 0.95fr); gap: clamp(20px, 3vw, 40px); align-items: start; padding-block: clamp(28px, 3vw, 40px); border-top: 2px dashed color-mix(in srgb, var(--color-accent) 55%, transparent); }
+  .job-no { padding-top: 12px; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-accent-text); }
+  .job-copy h3 { font-size: clamp(26px, 2.4vw, 32px); margin: 0 0 10px; }
+  .job-copy p { color: var(--color-ink-secondary); font-size: 17px; line-height: 1.55; }
+  .job-route { margin: 0; border: 1px solid var(--color-border); border-radius: 16px; padding: 10px; }
+  .job-route svg { display: block; width: 100%; height: auto; }
+  .r-box rect, rect.r-box { fill: var(--color-surface-raised); stroke: var(--color-border-control); stroke-width: 1.2; }
+  .r-pack { fill: var(--color-surface-sunken) !important; }
+  .r-text, .r-text text { font-family: var(--font-mono); font-size: 12px; fill: var(--color-ink-secondary); text-anchor: middle; }
+  .r-route { fill: none; stroke: var(--color-accent); stroke-width: 2.5; stroke-dasharray: 7 6; stroke-linecap: round; stroke-linejoin: round; }
+  .r-return { stroke: var(--color-border-control); }
+  .r-arrow { fill: none; stroke: var(--color-accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .r-stop circle { fill: var(--color-surface-raised); stroke: var(--color-accent); stroke-width: 2; }
+  .r-bot { fill: var(--color-ink); stroke: var(--color-surface-raised); stroke-width: 3; }
+  .job-checks { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; font-size: 15px; color: var(--color-ink-secondary); }
+  .job-checks li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; line-height: 1.45; }
+  .job-checks li::before { content: ""; width: 10px; height: 10px; margin-top: 6px; border-radius: 2px; border: 1.5px solid var(--color-accent); }
+
+  /* 3. Builds */
+  .rb-builds-band { background: var(--color-home-panel); }
+  .build-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .build { display: flex; flex-direction: column; background: var(--color-surface-raised); border: 1px solid var(--color-border); border-radius: 24px; overflow: hidden; }
+  .build-media { aspect-ratio: 16 / 10; margin: 12px 12px 0; border-radius: 16px; overflow: hidden; background: var(--color-surface-sunken); }
+  .build-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .build-media--cutout img { object-fit: cover; object-position: 50% 92%; transform: scale(1.05); }
+  .build-body { padding: 28px 32px 32px; display: flex; flex-direction: column; flex: 1; }
+  .build-code { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-accent-text); }
+  .build-body h3 { font-size: clamp(28px, 2.6vw, 36px); margin: 8px 0 10px; }
+  .build-body > p { color: var(--color-ink-secondary); font-size: 17px; }
+  .build-facts { margin: 24px 0 8px; border-top: 1px solid var(--color-border); }
+  .build-facts div { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+  .build-facts dt { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-secondary); padding-top: 3px; }
+  .build-facts dd { margin: 0; font-size: 15px; }
+  .build-body .page-link { margin-top: auto; align-self: flex-start; }
+
+  /* 4. Datasheet + fit */
+  .rb-spec-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+  .datasheet { position: relative; background: var(--color-surface-raised); border: 1px solid var(--color-border-control); border-radius: 16px; overflow: hidden; }
+  .datasheet-tape { height: 8px; }
+  .datasheet-head { padding: 22px 28px 18px; border-bottom: 2px solid var(--color-ink); }
+  .datasheet-head h2 { font-size: 26px; margin: 0; }
+  .datasheet-head span { display: block; margin-top: 6px; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-secondary); }
+  .datasheet-rows { margin: 0; padding: 8px 28px; }
+  .datasheet-rows div { display: flex; align-items: baseline; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+  .datasheet-rows div:last-child { border-bottom: 0; }
+  .datasheet-rows dt { font-size: 15px; white-space: nowrap; }
+  .datasheet-rows div::after { content: ""; order: 1; flex: 1; border-bottom: 1px dotted var(--color-border-control); transform: translateY(-4px); min-width: 12px; }
+  .datasheet-rows dd { order: 2; margin: 0; font-family: var(--font-mono); font-size: 15px; text-align: right; }
+  .datasheet-note { max-width: none; padding: 16px 28px 22px; font-size: 13px; color: var(--color-ink-secondary); background: var(--color-surface-sunken); border-top: 1px solid var(--color-border); }
+  .fit h2 { font-size: clamp(32px, 3.4vw, 46px); line-height: 1.05; margin: 0 0 28px; }
+  .fit-list { list-style: none; margin: 0 0 16px; padding: 0; }
+  .fit-list li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; padding: 18px 0; border-top: 1px solid var(--color-border); }
+  .fit-no { font-family: var(--font-mono); font-size: 13px; color: var(--color-accent-text); padding-top: 4px; }
+  .fit-list h3 { font-size: 19px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .fit-list p { color: var(--color-ink-secondary); font-size: 16px; }
+
+  /* 5. Video */
+  .rb-video { padding-block: var(--rb-gap); }
+  .rb-video .asset-tag { background: transparent; color: var(--color-ink); border-color: #5A6068; }
+  .rb-video .asset-tag::before { background: transparent; border-color: #5A6068; }
+  .rb-video-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .rb-video h2 { font-size: clamp(34px, 4vw, 54px); line-height: 1.05; margin: 0 0 16px; color: var(--color-ink); }
+  .rb-video p { color: var(--color-ink-secondary); font-size: 19px; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .job { grid-template-columns: 72px minmax(0, 1fr) minmax(0, 1fr); }
+    .job-checks { grid-column: 2 / -1; grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .rb-hero, .rb-spec-grid, .rb-video-grid, .build-grid { grid-template-columns: 1fr; }
+    .rb-hero { padding-top: 32px; }
+    .rb-plate { padding: 56px 12px 52px; }
+    .rb-robot { width: min(260px, 58%); }
+  }
+  @media (max-width: 700px) {
+    .job { grid-template-columns: 1fr; gap: 16px; }
+    .job-checks { grid-column: auto; grid-template-columns: 1fr; }
+    .rb-readout { width: 100%; grid-template-columns: repeat(3, 1fr); }
+    .rb-readout div { padding: 12px 14px; }
+    /* Pins keep their numbers on the robot; names move to a legend below. */
+    .rb-plate { padding-bottom: 20px; }
+    .rb-plate figcaption { position: static; margin-top: 16px; }
+    .rb-robot { width: min(230px, 64%); }
+    .rb-pin::before, .rb-label { display: none; }
+    .rb-legend { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .rb-legend li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; align-items: start; font-size: 14px; line-height: 1.35; }
+    .rb-legend strong { display: block; font-weight: 600; }
+    .rb-legend li > span > span { font-family: var(--font-mono); font-size: 12px; color: var(--color-ink-secondary); }
+    .build-body { padding: 24px 22px 26px; }
+    .datasheet-head, .datasheet-rows, .datasheet-note { max-width: none; padding-inline: 18px; }
+    .datasheet-rows div { flex-wrap: wrap; }
+    .datasheet-rows dt { white-space: normal; }
+  }
 </style>

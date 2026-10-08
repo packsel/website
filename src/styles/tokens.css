@@ -4,23 +4,23 @@
 :root {
   color-scheme: light dark;
 
-  /* Color: light */
-  --color-surface:         #F7F5F2;
+  /* Color: light. Cool blue-grey, taken from the warehouse demo's stage (October 2026). */
+  --color-surface:         #E9EEF0;
   --color-surface-raised:  #FFFFFF;
-  --color-surface-sunken:  #EFEAE1;
-  --color-border:          #E1DACB;
-  --color-border-control:  #83765F;
+  --color-surface-sunken:  #DDE4E8;
+  --color-border:          #D3DCE0;
+  --color-border-control:  #6B7B85;
   --color-ink:             #14161A;
-  --color-ink-secondary:   #5B5F66;
+  --color-ink-secondary:   #4F5B64;
 
-  /* Neutral surfaces for the modern homepage. */
-  --color-home-panel: #F5F5F7;
-  --color-home-hover: #EDEEF0;
+  /* Pages are white; the cool blue-grey is for bands, panels and stages within them. */
+  --color-home-panel: #E9EEF0;
+  --color-home-hover: #E1E8EB;
 
   /* Color: both modes */
   --color-accent:          #E8622A; /* text only at ≥24px, or bold ≥19px */
   --color-on-accent:       #14161A; /* labels on accent fills. Never white. */
-  --color-accent-text:     #B94A1E; /* links and small accent text */
+  --color-accent-text:     #AD4318; /* links and small accent text; 4.5:1 on every light surface */
 
   /* Spacing */
   --space-1: 4px;
@@ -69,6 +69,26 @@
 
   --tracking-kicker: 0.12em;
 
+  /* Neumorphic controls. Buttons are the one place gradients and shadows are allowed.
+     They are concave: the key is the colour of whatever it sits on (--neu-bg), lifted by a
+     light shadow above-left and a dark one below-right, with a face that dips inward
+     (darker top-left, lighter bottom-right). Pressed, the shadows move inside.
+     Surfaces still separate by tone steps and 1px borders. */
+  --color-accent-lit:      #F5874F; /* lighter end of the orange key's dish */
+  --color-accent-deep:     #D9571F; /* darker end; ink on it is 4.6:1 */
+  --neu-bg:                var(--color-surface-raised);
+  --neu-shadow-dark:       rgba(93, 115, 129, 0.34);
+  --neu-shadow-light:      rgba(255, 255, 255, 0.95);
+  --neu-tint-dark:         #5D7381;
+  --neu-tint-dark-amount:  9%;
+  --neu-tint-light:        #FFFFFF;
+  --neu-tint-light-amount: 65%;
+  --neu-distance:          5px;
+  --neu-blur:              12px;
+  --neu-edge-amount:       40%;  /* light rim on the key edge */
+  --grain-opacity:         0.03;
+  --dot-grid:              rgba(107, 123, 133, 0.24);
+
   /* Layout */
   --measure:        68ch;
   --container-max:  72rem;
@@ -82,11 +102,19 @@
     --color-surface-sunken:  #1A1D21;
     --color-border:          #262B31;
     --color-border-control:  #727982;
-    --color-ink:             #F2EFE9;
+    --color-ink:             #EEF1F3;
     --color-ink-secondary:   #9BA0A8;
     --color-accent-text:     #E8622A;
     --color-home-panel:      #1D2024;
     --color-home-hover:      #262B31;
+    --neu-shadow-dark:       rgba(0, 0, 0, 0.6);
+    --neu-shadow-light:      rgba(255, 255, 255, 0.06);
+    --neu-tint-dark:         #000000;
+    --neu-tint-dark-amount:  28%;
+    --neu-tint-light-amount: 7%;
+    --neu-edge-amount:       6%;
+    --grain-opacity:         0.06;
+    --dot-grid:              rgba(155, 160, 168, 0.18);
   }
 }
 

@@ -1,0 +1,220 @@
+/* Texture and neumorphic controls. Loaded last.
+   The idea: a warehouse, not a showroom. Buttons are physical keys on a control panel,
+   surfaces carry a faint grain, and a few floor-marking motifs (hazard tape,
+   dashed floor lines, asset tags, drawing-board dot grids) give the site its own
+   character. Selectors are prefixed with `html body.modern-site` so they reliably
+   win over the earlier layers without !important. */
+
+/* ---------- Grain ---------- */
+:root {
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+html body.modern-site::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: var(--grain);
+  background-size: 160px 160px;
+}
+@media print { html body.modern-site::after { display: none; } }
+
+/* ---------- Hazard tape ----------
+   The one decorative pattern: diagonal orange and ink stripes, like floor tape
+   around a robot lane. Used as thin edges only, never as a fill. */
+.hazard-tape,
+html body.modern-site .site-header::before,
+html body.modern-site .contact-band::before {
+  background: repeating-linear-gradient(-45deg, var(--color-accent) 0 10px, var(--color-on-accent) 10px 20px);
+}
+html body.modern-site .site-header::before {
+  content: "";
+  display: block;
+  height: 5px;
+}
+html body.modern-site .contact-band { position: relative; }
+html body.modern-site .contact-band::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+}
+
+/* ---------- Where the blue goes ----------
+   Pages, header and footer are white. Bands, panels and stages use the cool blue-grey. */
+html body.modern-site,
+html body.modern-site :is(.interior, .home-redesign, .home-pair, .site-header, .site-footer) {
+  background-color: var(--color-surface-raised);
+}
+/* Neumorphic keys take their colour from what they sit on. */
+html body.modern-site :is(.contact-band, .warehouse-story, .home-savings, .home-contact, .home-panel,
+  .neutral-band, .rb-builds-band, .contact-surface, .contact-link-row) {
+  --neu-bg: var(--color-home-panel);
+}
+html body.modern-site :is(.build, .feature-card, .step-card, .spec-panel, .calculator-inputs,
+  .calculator-results, .datasheet, .rb-plate) {
+  --neu-bg: var(--color-surface-raised);
+}
+html body.modern-site .ink-band { --neu-bg: #121417; }
+
+/* ---------- Neumorphic concave keys ----------
+   Lifted off the surface by a light shadow (top-left) and a dark one (bottom-right);
+   the face dips inward: darker top-left, lighter bottom-right. Pressed, the shadows go inside. */
+html body.modern-site :is(.button, .home-button) {
+  --face-dark: color-mix(in srgb, var(--neu-bg), var(--neu-tint-dark) var(--neu-tint-dark-amount));
+  --face-light: color-mix(in srgb, var(--neu-bg), var(--neu-tint-light) var(--neu-tint-light-amount));
+  --lift: var(--neu-distance) var(--neu-distance) var(--neu-blur) var(--neu-shadow-dark),
+          calc(var(--neu-distance) * -1) calc(var(--neu-distance) * -1) var(--neu-blur) var(--neu-shadow-light);
+  --sink: inset 3px 3px 7px var(--neu-shadow-dark), inset -3px -3px 7px var(--neu-shadow-light);
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  border: 1px solid color-mix(in srgb, var(--neu-bg), var(--neu-tint-light) var(--neu-edge-amount));
+  background: linear-gradient(145deg, var(--face-dark), var(--face-light));
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  box-shadow: var(--lift);
+  transform: none;
+  transition: box-shadow 140ms ease-out, filter 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+html body.modern-site .home-button { display: inline-flex; }
+html body.modern-site :is(.button-primary, .home-button) {
+  --face-dark: var(--color-accent-deep);
+  --face-light: var(--color-accent-lit);
+  border-color: color-mix(in srgb, var(--color-accent), #FFFFFF 25%);
+  color: var(--color-on-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  html body.modern-site :is(.button, .home-button):hover {
+    background: linear-gradient(145deg, var(--face-dark), var(--face-light));
+    color: var(--color-ink);
+    border-color: color-mix(in srgb, var(--neu-bg), var(--neu-tint-light) var(--neu-edge-amount));
+    transform: none;
+    text-decoration: none;
+    box-shadow:
+      calc(var(--neu-distance) + 2px) calc(var(--neu-distance) + 2px) calc(var(--neu-blur) + 4px) var(--neu-shadow-dark),
+      calc(var(--neu-distance) * -1 - 2px) calc(var(--neu-distance) * -1 - 2px) calc(var(--neu-blur) + 4px) var(--neu-shadow-light);
+  }
+  html body.modern-site :is(.button-primary, .home-button):hover {
+    color: var(--color-on-accent);
+    border-color: color-mix(in srgb, var(--color-accent), #FFFFFF 25%);
+    filter: saturate(1.06);
+  }
+}
+html body.modern-site :is(.button, .home-button):active {
+  box-shadow: var(--sink);
+  background: linear-gradient(145deg, var(--face-dark), var(--face-dark));
+}
+html body.modern-site :is(.button-primary, .home-button):active {
+  box-shadow: inset 3px 3px 7px rgba(120, 40, 10, 0.45), inset -3px -3px 7px rgba(255, 190, 150, 0.5);
+}
+/* Header keys are a size smaller. */
+html body.modern-site :is(.header-cta, .menu-toggle) {
+  min-height: 44px;
+  padding: 8px 18px;
+  font-size: 15px;
+}
+html body.modern-site .header-cta span { display: none; }
+
+/* ---------- Text links: an arrow that moves, on a tape underline ---------- */
+html body.modern-site :is(.page-link, .home-link, .card-action) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 2px;
+  border-radius: 0;
+  background: none;
+  color: var(--color-accent-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+  text-decoration-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  transform: none;
+  transition: text-decoration-color 160ms ease;
+}
+html body.modern-site :is(.page-link, .home-link, .card-action)::after {
+  content: "→";
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 160ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  html body.modern-site :is(.page-link, .home-link):hover,
+  html body.modern-site a:hover .card-action {
+    background: none;
+    color: var(--color-accent-text);
+    transform: none;
+    text-decoration-color: var(--color-accent);
+  }
+  html body.modern-site :is(.page-link, .home-link):hover::after,
+  html body.modern-site a:hover .card-action::after { transform: translateX(4px); }
+}
+
+/* ---------- Asset tags (equipment labels) ---------- */
+.asset-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px 5px 8px;
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.asset-tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-control);
+  background: var(--color-surface);
+}
+
+/* ---------- Drawing-board dot grid ---------- */
+.dot-grid {
+  background-color: var(--color-surface-raised);
+  background-image: radial-gradient(var(--dot-grid) 1px, transparent 1.4px);
+  background-size: 16px 16px;
+  background-position: 8px 8px;
+}
+
+/* ---------- Dark band (for video and other "lights down" moments) ---------- */
+.ink-band {
+  --color-surface: #1D2024;
+  --color-surface-raised: #1D2024;
+  --color-ink: #F2EFE9;
+  --color-ink-secondary: #A9AEB5;
+  --color-accent-text: #F08A5D;
+  --color-border: #2C3137;
+  background: #121417;
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body.modern-site :is(.button, .home-button, .page-link, .home-link, .card-action),
+  html body.modern-site :is(.page-link, .home-link, .card-action)::after { transition: none; }
+}

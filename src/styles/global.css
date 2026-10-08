@@ -132,10 +132,6 @@ a:hover { text-decoration-thickness: 2px; }
 
 .rule-top { border-top: var(--border-width) solid var(--color-border); }
 
-/* accent-text is 4.32:1 on light surface-sunken, below AA for small text.
-   Inside sunken areas, links and kickers fall back to ink tones. */
-.surface-sunken a:not(.button) { color: var(--color-ink); }
-.surface-sunken .kicker { color: var(--color-ink-secondary); }
 
 /* Type utilities */
 .kicker {
